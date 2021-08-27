@@ -3,6 +3,7 @@ package domain.model.payment
 /**
  * 経路
  */
+// TODO: 出発地クラスと到着地クラスは必要ないかもしれない
 class Route(
     val departureStation: DepartureStation,
     val arrivalStation: ArrivalStation
@@ -20,6 +21,6 @@ class Route(
     }
 
     override fun hashCode(): Int {
-        return 31 * departureStation.hashCode() + arrivalStation.hashCode()
+        return departureStation.hashCode() * arrivalStation.hashCode()
     }
 }
