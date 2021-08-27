@@ -6,6 +6,13 @@ import domain.model.station.Station
 /**
  * 出発駅
  */
-class DepartureStation() {
-    val station = Station.TOKYO
+class DepartureStation(val aStation: Station) {
+    val station: Station
+
+    init {
+        if (aStation != Station.TOKYO)
+            throw IllegalArgumentException("出発駅は東京のみ選択できます")
+
+        station = aStation
+    }
 }

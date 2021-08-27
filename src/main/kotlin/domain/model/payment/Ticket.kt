@@ -1,10 +1,10 @@
 package domain.model.payment
 
 /**
- * チケット
+ * 切符
  */
 class Ticket(
-    val departureStation: DepartureStation,
-    val arrivalStation: ArrivalStation
+    private val route: Route
 ) {
+
 }
