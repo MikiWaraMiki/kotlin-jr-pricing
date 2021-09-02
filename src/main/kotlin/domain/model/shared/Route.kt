@@ -20,20 +20,4 @@ class Route(
         departureStation = aDepartureStation
         arrivalStation = anArrivalStation
     }
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-
-        if (javaClass != other?.javaClass) return false
-
-        other as Route
-
-        if (departureStation != other.departureStation) return false
-        if (arrivalStation != other.arrivalStation) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return departureStation.hashCode() * arrivalStation.hashCode()
-    }
 }
