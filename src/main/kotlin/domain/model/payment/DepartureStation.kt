@@ -6,7 +6,7 @@ import domain.model.station.Station
 /**
  * 出発駅
  */
-class DepartureStation(val aStation: Station) {
+class DepartureStation(aStation: Station) {
     val station: Station
 
     init {
