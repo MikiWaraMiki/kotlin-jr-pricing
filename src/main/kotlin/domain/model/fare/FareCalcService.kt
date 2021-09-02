@@ -5,11 +5,11 @@ import domain.model.shared.Route
 /**
  * 運賃計算サービス
  */
-class FaraCalcService {
+class FareCalcService {
     companion object {
-        private val fareTable = FareTable()
 
         fun calcFare(route: Route): Int {
+            val fareTable = FareTable()
             val fare = fareTable.fare(route)
 
             return fare.value
