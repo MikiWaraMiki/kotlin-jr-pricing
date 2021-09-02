@@ -8,20 +8,19 @@ import domain.model.station.Station
 /**
  * 運賃表
  */
-// TODO: [domain.model.payment.Route]に依存するのは違和感がある
 class FareTable {
-    private val table = mapOf<Route, Int>(
+    private val table = mapOf<Route, Fare>(
         Route(
             Station.TOKYO,
             Station.SHIN_OSAKA
-        ) to 8910,
+        ) to Fare(8910),
         Route(
             Station.TOKYO,
             Station.HIMEJI
-        ) to 10010
+        ) to Fare(10010)
     )
 
-    fun fare(route: Route): Int {
+    fun fare(route: Route): Fare {
         return table[route] ?: throw IllegalArgumentException(
             "運賃表に存在しない経路です。"
         )

@@ -21,7 +21,7 @@ class FareTableTest {
 
         val result = fareTable.fare(route)
 
-        Assertions.assertEquals(8910, result)
+        Assertions.assertEquals(8910, result.value)
     }
 
     @Test
@@ -34,6 +34,6 @@ class FareTableTest {
 
         val result = fareTable.fare(route)
 
-        Assertions.assertEquals(10010, result)
+        Assertions.assertEquals(10010, result.value)
     }
 }
