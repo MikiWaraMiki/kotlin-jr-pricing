@@ -2,7 +2,7 @@ package domain.model.fare
 
 import domain.model.payment.ArrivalStation
 import domain.model.payment.DepartureStation
-import domain.model.payment.Route
+import domain.model.shared.Route
 import domain.model.station.Station
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
@@ -15,8 +15,8 @@ class FareTableTest {
     @DisplayName("東京から新大阪の運賃が8910円であること")
     fun tokyoToShinOsakaValidFare() {
         val route = Route(
-            DepartureStation(Station.TOKYO),
-            ArrivalStation(Station.SHIN_OSAKA)
+            Station.TOKYO,
+            Station.SHIN_OSAKA
         )
 
         val result = fareTable.fare(route)
@@ -28,8 +28,8 @@ class FareTableTest {
     @DisplayName("東京から姫路の運賃が10010円であること")
     fun tokyoToHimejiValidFare() {
         val route = Route(
-            DepartureStation(Station.TOKYO),
-            ArrivalStation(Station.HIMEJI)
+            Station.TOKYO,
+            Station.HIMEJI
         )
 
         val result = fareTable.fare(route)

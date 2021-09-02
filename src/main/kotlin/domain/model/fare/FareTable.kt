@@ -2,7 +2,7 @@ package domain.model.fare
 
 import domain.model.payment.ArrivalStation
 import domain.model.payment.DepartureStation
-import domain.model.payment.Route
+import domain.model.shared.Route
 import domain.model.station.Station
 
 /**
@@ -12,12 +12,12 @@ import domain.model.station.Station
 class FareTable {
     private val table = mapOf<Route, Int>(
         Route(
-            DepartureStation(Station.TOKYO),
-            ArrivalStation(Station.SHIN_OSAKA)
+            Station.TOKYO,
+            Station.SHIN_OSAKA
         ) to 8910,
         Route(
-            DepartureStation(Station.TOKYO),
-            ArrivalStation(Station.HIMEJI)
+            Station.TOKYO,
+            Station.HIMEJI
         ) to 10010
     )
 
