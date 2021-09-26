@@ -1,10 +1,17 @@
 package domain.model.ticket
 
+import domain.model.shared.Route
+import domain.model.train.SeatType
+import domain.model.train.TrainType
+
 /**
  * 購入切符クラス
  */
 class Ticket(
-    private val ticketType: TicketType,
-    private val isChild: Boolean
+    val route: Route,
+    val ticketType: TicketType,
+    val trainType: TrainType,
+    val seatType: SeatType,
+    val isChild: Boolean
 ) {
 }

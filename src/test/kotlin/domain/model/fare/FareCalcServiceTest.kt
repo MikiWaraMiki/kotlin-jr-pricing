@@ -5,6 +5,8 @@ import domain.model.shared.Route
 import domain.model.station.Station
 import domain.model.ticket.Ticket
 import domain.model.ticket.TicketType
+import domain.model.train.SeatType
+import domain.model.train.TrainType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -19,6 +21,8 @@ class FareCalcServiceTest {
         val ticket = Ticket(
             Route(Station.TOKYO, Station.SHIN_OSAKA),
             TicketType.ONE_WAY,
+            TrainType.NOZOMI,
+            SeatType.RESERVED,
             isChild = false
         )
 
@@ -34,6 +38,8 @@ class FareCalcServiceTest {
         val ticket = Ticket(
             Route(Station.TOKYO, Station.SHIN_OSAKA),
             TicketType.ONE_WAY,
+            TrainType.NOZOMI,
+            SeatType.RESERVED,
             isChild = true
         )
 
