@@ -1,4 +1,4 @@
-package domain.model.additionalchage.traintype
+package domain.model.additionalcharge.traintype
 
 import domain.model.additionalcharge.traintype.NozomiAdditionalChargeTable
 import domain.model.shared.Price
