@@ -1,7 +1,6 @@
 package domain.model.fare
 
-import domain.model.payment.ArrivalStation
-import domain.model.payment.DepartureStation
+import domain.model.shared.Price
 import domain.model.shared.Route
 import domain.model.station.Station
 import org.junit.jupiter.api.Assertions
@@ -19,9 +18,9 @@ class FareTableTest {
             Station.SHIN_OSAKA
         )
 
-        val result = fareTable.fare(route)
+        val price = fareTable.price(route)
 
-        Assertions.assertEquals(8910, result.value)
+        Assertions.assertEquals(Price(8910), price)
     }
 
     @Test
@@ -32,8 +31,8 @@ class FareTableTest {
             Station.HIMEJI
         )
 
-        val result = fareTable.fare(route)
+        val price = fareTable.price(route)
 
-        Assertions.assertEquals(10010, result.value)
+        Assertions.assertEquals(Price(10010), price)
     }
 }
