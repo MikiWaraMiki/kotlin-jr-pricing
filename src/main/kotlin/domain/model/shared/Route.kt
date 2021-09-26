@@ -1,6 +1,5 @@
 package domain.model.shared
 
-import domain.model.payment.ArrivalStation
 import domain.model.station.Station
 
 /**
