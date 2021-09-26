@@ -1,11 +1,11 @@
-package domain.model.additionalcharge.traintype
+package domain.model.surcharge.additionalcharge
 
 import domain.model.shared.Price
 import domain.model.shared.Route
 import domain.model.station.Station
 
 /**
- * のぞみ利用時の追加料金テーブル
+ * のぞみ利用時の追加料金表
  */
 class NozomiAdditionalChargeTable() {
     private val table = mapOf<Route, Price>(
@@ -15,7 +15,7 @@ class NozomiAdditionalChargeTable() {
 
     fun price(route: Route): Price {
         return table[route] ?: throw IllegalArgumentException(
-            "存在しない経路です"
+            "料金表に存在しません"
         )
     }
 }
