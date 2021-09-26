@@ -12,8 +12,8 @@ class FareCalcService {
 
     fun calcPrice(ticket: Ticket): Price {
         val farePrice = fareTable.price(ticket.route)
-        val fare = Fare(farePrice, ticket.isChild)
+        val fare = Fare(farePrice)
 
-        return fare.price
+        return fare.price(ticket.isChild)
     }
 }

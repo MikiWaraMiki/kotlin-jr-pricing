@@ -5,20 +5,19 @@ import domain.model.shared.Price
 /**
  * 運賃クラス
  */
-class Fare(aPrice: Price, isChild: Boolean) {
+class Fare(aPrice: Price) {
     private val CHILD_DISCOUNT_RATE = 0.5
 
-    val price: Price
+    val price = aPrice
 
-    init {
-        price = if (isChild)
-            childPrice(aPrice)
-        else
-            aPrice
+    fun price(isChild: Boolean): Price {
+        if (isChild) return childPrice()
+
+        return price
     }
 
-    private fun childPrice(basePrice: Price): Price {
-        val discountedPrice = (basePrice.value * CHILD_DISCOUNT_RATE).toInt()
+    private fun childPrice(): Price {
+        val discountedPrice = (price.value * CHILD_DISCOUNT_RATE).toInt()
 
         // 1円単位・5円単位の端数は切り捨て
         val truncated = discountedPrice % 10
