@@ -1,18 +1,19 @@
 package domain.model.fare
 
+import domain.model.shared.Price
 import domain.model.shared.Route
+import domain.model.ticket.Ticket
 
 /**
  * 運賃計算サービス
  */
 class FareCalcService {
-    companion object {
+    private val fareTable = FareTable()
 
-        fun calcFare(route: Route): Int {
-            val fareTable = FareTable()
-            val fare = fareTable.fare(route)
+    fun calcPrice(ticket: Ticket): Price {
+        val farePrice = fareTable.price(ticket.route)
+        val fare = Fare(farePrice, ticket.isChild)
 
-            return fare.value
-        }
+        return fare.price
     }
 }
