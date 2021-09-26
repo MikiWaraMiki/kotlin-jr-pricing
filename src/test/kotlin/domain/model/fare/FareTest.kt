@@ -1,34 +1,25 @@
 package domain.model.fare
 
+import domain.model.shared.Price
 import org.junit.jupiter.api.*
 
 class FareTest {
 
-    @Test
-    @DisplayName("運賃に5円単位が含まれている場合はエラーが発生すること")
-    fun throwErrorWhenFareIsIncludeFiveYen() {
-        val error = assertThrows<IllegalArgumentException> {
-            Fare(2005)
+    @Nested
+    @DisplayName("子供料金の金額計算テスト")
+    inner class ChildPriceTest() {
+        @Test
+        fun `半額になること`() {
+            val fare = Fare(Price(1000), isChild = true)
+
+            Assertions.assertEquals(Price(500), fare.price)
         }
 
-        Assertions.assertEquals("運賃は10円単位である必要があります", error.message)
-    }
+        @Test
+        fun `5円の端数が切り捨てられること`() {
+            val fare = Fare(Price(8910), isChild = true)
 
-    @Test
-    @DisplayName("運賃に1円単位が含まれている場合はエラーが発生すること")
-    fun throwErrorWhenFareIsIncludeOneYen() {
-        val error = assertThrows<IllegalArgumentException> {
-            Fare(2011)
-        }
-
-        Assertions.assertEquals("運賃は10円単位である必要があります", error.message)
-    }
-
-    @Test
-    @DisplayName("運賃が10円単位である場合はエラーが発生しないこと")
-    fun notThrowErrorWhenFareDivisibleTenYen() {
-        assertDoesNotThrow {
-            Fare(2010)
+            Assertions.assertEquals(Price(4450), fare.price)
         }
     }
 }
