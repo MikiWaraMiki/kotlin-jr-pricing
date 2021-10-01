@@ -1,6 +1,6 @@
 package domain.model.route
 
-import domain.model.shared.Route
+import domain.model.route.Route
 import domain.model.station.Station
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName

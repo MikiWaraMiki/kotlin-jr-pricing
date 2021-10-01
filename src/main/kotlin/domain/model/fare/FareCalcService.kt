@@ -1,7 +1,6 @@
 package domain.model.fare
 
 import domain.model.shared.Price
-import domain.model.shared.Route
 import domain.model.ticket.Ticket
 
 /**

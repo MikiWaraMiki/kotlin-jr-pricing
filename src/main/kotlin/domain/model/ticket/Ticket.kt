@@ -1,6 +1,6 @@
 package domain.model.ticket
 
-import domain.model.shared.Route
+import domain.model.route.Route
 import domain.model.train.SeatType
 import domain.model.train.TrainType
 

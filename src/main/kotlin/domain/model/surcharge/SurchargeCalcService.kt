@@ -1,7 +1,7 @@
 package domain.model.surcharge
 
 import domain.model.shared.Price
-import domain.model.shared.Route
+import domain.model.route.Route
 import domain.model.surcharge.additionalcharge.NozomiAdditionalChargeTable
 import domain.model.ticket.Ticket
 import domain.model.train.SeatType
