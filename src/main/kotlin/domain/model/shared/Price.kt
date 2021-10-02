@@ -18,4 +18,14 @@ class Price: ValueObject<Int>  {
             throw IllegalArgumentException("金額は10円単位である必要があります")
         }
     }
+
+    companion object {
+        fun to(aValue: Int): Price {
+            val surplus = aValue % 10
+
+            if (surplus == 0) return Price(aValue)
+
+            return Price(aValue - surplus)
+        }
+    }
 }
