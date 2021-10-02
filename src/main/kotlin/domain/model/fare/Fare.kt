@@ -19,8 +19,6 @@ class Fare(aPrice: Price) {
     private fun childPrice(): Price {
         val discountedPrice = (price.value * CHILD_DISCOUNT_RATE).toInt()
 
-        // 1円単位・5円単位の端数は切り捨て
-        val truncated = discountedPrice % 10
-        return Price(discountedPrice - truncated)
+        return Price.to(discountedPrice)
     }
 }
