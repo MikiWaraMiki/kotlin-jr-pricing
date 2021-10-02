@@ -18,6 +18,8 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:1.5.2")
     implementation("io.ktor:ktor-html-builder:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
+
+    testImplementation("org.mockito:mockito-core:3.2.0")
 }
 
 tasks.test {
