@@ -1,6 +1,6 @@
-package domain.model.discount.roundtrip
+package domain.model.discount.rule
 
-import domain.model.discount.DiscountRule
+import domain.model.discount.rule.DiscountRule
 import domain.model.fare.Fare
 import domain.model.shared.Price
 import domain.model.ticket.Ticket
@@ -21,19 +21,4 @@ class DistanceKilometerDiscountRule(
 
         return ticket.isLongDistance()
     }
-
-
-    /**
-     * ルール適用後の割引料金
-     */
-    override fun price(fare: Fare): Fare {
-       val basePrice = fare.price
-
-        val discountedCalcResult = (basePrice.value * (1 - DISCOUNT_RATE)).toInt()
-
-        val truncated = discountedCalcResult % 10
-
-        return Fare(Price(truncated))
-    }
-
 }
