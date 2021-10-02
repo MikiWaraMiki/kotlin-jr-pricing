@@ -14,4 +14,12 @@ class Ticket(
     val seatType: SeatType,
     val isChild: Boolean
 ) {
+
+    fun isOneway(): Boolean {
+        return ticketType == TicketType.ONE_WAY
+    }
+
+    fun isLongDistance(): Boolean {
+        return route.isLongDistance()
+    }
 }

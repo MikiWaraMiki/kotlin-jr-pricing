@@ -1,5 +1,6 @@
 package domain.model.discount
 
+import domain.model.discount.roundtrip.DistanceKilometerDiscountRule
 import domain.model.route.Route
 import domain.model.station.Station
 import domain.model.ticket.Ticket
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class DistanceKilometerDiscountRuleTest {
-
     @Nested
     @DisplayName("isAbleEnabledメソッドのテスト")
     inner class IsAbleEnabledTest() {
@@ -26,7 +26,7 @@ class DistanceKilometerDiscountRuleTest {
                 isChild = false
             )
 
-            val result = DistanceKilometerDiscountRule(ticket).isAbleEnabled()
+            val result = DistanceKilometerDiscountRule(ticket).can()
 
             Assertions.assertFalse(result)
         }
@@ -41,7 +41,7 @@ class DistanceKilometerDiscountRuleTest {
                 isChild = false
             )
 
-            val result = DistanceKilometerDiscountRule(ticket).isAbleEnabled()
+            val result = DistanceKilometerDiscountRule(ticket).can()
 
             Assertions.assertFalse(result)
         }
@@ -56,7 +56,7 @@ class DistanceKilometerDiscountRuleTest {
                 isChild = false
             )
 
-            val result = DistanceKilometerDiscountRule(ticket).isAbleEnabled()
+            val result = DistanceKilometerDiscountRule(ticket).can()
 
             Assertions.assertTrue(result)
         }
