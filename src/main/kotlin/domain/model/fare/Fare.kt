@@ -19,6 +19,6 @@ class Fare(aPrice: Price) {
     private fun childPrice(): Price {
         val discountedPrice = (price.value * CHILD_DISCOUNT_RATE).toInt()
 
-        return Price.to(discountedPrice)
+        return Price.of(discountedPrice)
     }
 }

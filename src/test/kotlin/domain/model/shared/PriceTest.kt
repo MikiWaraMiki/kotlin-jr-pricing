@@ -1,7 +1,6 @@
 package domain.model.shared
 
 import org.junit.jupiter.api.*
-import java.lang.AssertionError
 
 class PriceTest {
 
@@ -41,21 +40,21 @@ class PriceTest {
     inner class ToTest() {
         @Test
         fun `金額に5円が使われている場合は切り捨てられた金額を取得できる`() {
-            val price = Price.to(1015)
+            val price = Price.of(1015)
 
             Assertions.assertEquals(1010, price.value)
         }
 
         @Test
         fun `金額に1円が使われている場合は切り捨てられた金額を取得できる`() {
-            val price = Price.to(1009)
+            val price = Price.of(1009)
 
             Assertions.assertEquals(1000, price.value)
         }
 
         @Test
         fun `金額に1円,5円が利用されていなければそのままの金額を取得できる`() {
-            val price = Price.to(1510)
+            val price = Price.of(1510)
 
             Assertions.assertEquals(1510, price.value)
         }

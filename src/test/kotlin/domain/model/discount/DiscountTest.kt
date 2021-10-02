@@ -15,7 +15,7 @@ class DiscountTest {
     inner class ToTest() {
         @Test
         fun `10%の割引額が取得できること`() {
-            val discount = Discount.to(DiscountRate.RATE_10, Price(10000))
+            val discount = Discount.of(DiscountRate.RATE_10, Price(10000))
 
             val expected = Price(9000)
 
@@ -24,7 +24,7 @@ class DiscountTest {
 
         @Test
         fun `10%の割引後金額に１円単位が含まれている場合は切り捨てられること`() {
-            val discount = Discount.to(DiscountRate.RATE_10, Price(10010))
+            val discount = Discount.of(DiscountRate.RATE_10, Price(10010))
 
             val expected = Price(9000)
 

@@ -20,7 +20,7 @@ class Price: ValueObject<Int>  {
     }
 
     companion object {
-        fun to(aValue: Int): Price {
+        fun of(aValue: Int): Price {
             val surplus = aValue % 10
 
             if (surplus == 0) return Price(aValue)

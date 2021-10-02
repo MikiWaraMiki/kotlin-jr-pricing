@@ -11,13 +11,13 @@ class Discount(
 ) {
 
     companion object {
-        fun to(rate: DiscountRate, basePrice: Price): Discount {
+        fun of(rate: DiscountRate, basePrice: Price): Discount {
             val discountPrice = basePrice.value.div(rate.value)
 
             val discountedPrice = basePrice.value - discountPrice
 
             return Discount(
-                Price.to(discountedPrice)
+                Price.of(discountedPrice)
             )
         }
     }
