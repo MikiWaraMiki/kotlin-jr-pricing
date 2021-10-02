@@ -1,6 +1,5 @@
 package domain.model.ticket
 
-import java.lang.Exception
 import java.time.LocalDate
 
 /**
@@ -20,12 +19,14 @@ class DepartureDate(aDate: LocalDate) {
     }
 
     companion object {
-        fun of(dateString: String) {
+        fun of(dateString: String): DepartureDate {
             val localDate = try {
                 LocalDate.parse(dateString)
             } catch(e: Exception) {
                 throw IllegalArgumentException("日付以外の値を指定しています")
             }
+
+            return DepartureDate(localDate)
         }
     }
 }
