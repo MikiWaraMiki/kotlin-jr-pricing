@@ -1,7 +1,7 @@
 package domain.model.surcharge
 
 import domain.model.shared.Price
-import domain.model.route.Route
+import domain.model.season.SeasonType
 import domain.model.surcharge.additionalcharge.NozomiAdditionalChargeTable
 import domain.model.ticket.Ticket
 import domain.model.train.SeatType
@@ -20,15 +20,32 @@ class SurchargeCalcService {
         val surchargeBasePrice = surchargeTable.price(ticket.route)
         val surcharge = Surcharge(surchargeBasePrice)
 
-        if (ticket.trainType == TrainType.NOZOMI) {
+        if (ticket.useNozomi()) {
             val additionalPrice = nozomiAdditionalChargeTable.price(ticket.route)
             surcharge.addPrice(additionalPrice)
         }
 
-        if (ticket.seatType == SeatType.NON_RESERVED) {
+        if (ticket.useNonReservedSeat()) {
             surcharge.discountPrice(NON_RESERVED_DISCOUNT_PRICE)
         }
 
+        if (ticket.useReservedSeat()) {
+            seasonTypeFareCalc(ticket, surcharge)
+        }
+
         return surcharge.price(ticket.isChild)
+    }
+
+    // TODO: surchargeを不変クラスにして切り出す
+    private fun seasonTypeFareCalc(ticket: Ticket, surcharge: Surcharge) {
+        when(SeasonType.of(ticket.departureDate.date)) {
+            SeasonType.OFF_PEAK -> {
+                surcharge.discountPrice(Price(200))
+            }
+            SeasonType.PEAK -> {
+                surcharge.addPrice(Price(200))
+            }
+            else -> {}
+        }
     }
 }

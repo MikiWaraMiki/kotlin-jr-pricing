@@ -23,4 +23,16 @@ class Ticket(
     fun isLongDistance(): Boolean {
         return route.isLongDistance()
     }
+
+    fun useNozomi(): Boolean {
+        return trainType == TrainType.NOZOMI
+    }
+
+    fun useReservedSeat(): Boolean {
+        return seatType == SeatType.RESERVED
+    }
+
+    fun useNonReservedSeat(): Boolean {
+        return seatType == SeatType.NON_RESERVED
+    }
 }
