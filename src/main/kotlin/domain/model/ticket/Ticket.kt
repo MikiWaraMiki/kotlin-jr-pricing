@@ -9,6 +9,7 @@ import domain.model.train.TrainType
  */
 class Ticket(
     val route: Route,
+    val departureDate: DepartureDate,
     val ticketType: TicketType,
     val trainType: TrainType,
     val seatType: SeatType,

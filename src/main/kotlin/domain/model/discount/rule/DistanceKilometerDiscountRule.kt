@@ -20,6 +20,6 @@ class DistanceKilometerDiscountRule(
     }
 
     override fun rate(): DiscountRate {
-        TODO("Not yet implemented")
+        return DiscountRate.RATE_10
     }
 }

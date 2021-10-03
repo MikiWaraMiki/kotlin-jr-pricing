@@ -12,6 +12,7 @@ interface TicketFactory {
     fun generate(
         departureStationLabel: String,
         arrivalStationLabel: String,
+        departureDate: String,
         ticketTypeLabel: String,
         trainTypeLabel: String,
         seatTypeLabel: String,
@@ -21,6 +22,9 @@ interface TicketFactory {
         // DBに格納し始めてから、インフラ層に実装クラスを書く
         val departureStation = Station.fromLabel(departureStationLabel)
         val arrivalStation = Station.fromLabel(arrivalStationLabel)
+
+        val departureDate = DepartureDate.of(departureDate)
+
         val route = Route(departureStation, arrivalStation)
 
         val ticketType = TicketType.fromTypeName(ticketTypeLabel)
@@ -30,6 +34,7 @@ interface TicketFactory {
 
         return Ticket(
             route,
+            departureDate,
             ticketType,
             trainType,
             seatType,

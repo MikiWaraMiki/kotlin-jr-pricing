@@ -1,6 +1,5 @@
-package domain.model.discount
+package domain.model.discount.rule
 
-import domain.model.discount.rule.DistanceKilometerDiscountRule
 import domain.model.route.Route
 import domain.model.station.Station
 import domain.model.ticket.DepartureDate
