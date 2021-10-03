@@ -2,20 +2,33 @@ package lib.domainsupport.valueobject
 
 import java.time.LocalDate
 import java.time.MonthDay
-import java.time.LocalDate.of as of1
 
 class MonthDayRange(
     private val start: MonthDay,
     private val end: MonthDay
 ) {
-    private val isEndNextYear: Boolean
-
-    init {
-        isEndNextYear = start.isAfter(end)
-    }
 
     fun contains(monthDay: MonthDay): Boolean {
+        return if (isSameMonthStartAndEnd()) {
+            caseSameMonthContains(monthDay)
+        } else {
+            caseDifferentMonthContains(monthDay)
+        }
+    }
 
+    private fun isSameMonthStartAndEnd(): Boolean {
+        return start.month == end.month
+    }
+
+    private fun caseSameMonthContains(monthDay: MonthDay): Boolean {
+        if (monthDay == start) return true
+
+        if (monthDay == end) return true
+
+        return monthDay.isAfter(start) && monthDay.isBefore(end)
+    }
+
+    private fun caseDifferentMonthContains(monthDay: MonthDay): Boolean {
         if (start.month == monthDay.month && start.dayOfMonth <= monthDay.dayOfMonth)
             return true
 
@@ -23,17 +36,5 @@ class MonthDayRange(
             return true
 
         return false
-    }
-
-    private fun startDateTime(): LocalDate {
-        return start.atYear(LocalDate.now().year)
-    }
-
-    private fun endDateTime(): LocalDate {
-        return if (isEndNextYear) {
-            end.atYear(LocalDate.now().plusYears(1).year)
-        } else {
-            end.atYear(LocalDate.now().year)
-        }
     }
 }
