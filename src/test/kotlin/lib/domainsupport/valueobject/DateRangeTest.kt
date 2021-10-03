@@ -3,7 +3,7 @@ package lib.domainsupport.valueobject
 import org.junit.jupiter.api.*
 import java.time.LocalDate
 
-class DateRangeClassTest {
+class DateRangeTest {
 
     @Nested
     @DisplayName("バリデーションテスト")
