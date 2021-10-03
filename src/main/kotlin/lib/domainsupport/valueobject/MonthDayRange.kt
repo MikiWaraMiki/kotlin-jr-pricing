@@ -1,40 +1,28 @@
 package lib.domainsupport.valueobject
 
 import java.time.LocalDate
+import java.time.Month
 import java.time.MonthDay
 
 class MonthDayRange(
-    private val start: MonthDay,
-    private val end: MonthDay
+    val aStart: MonthDay,
+    val aEnd: MonthDay
 ) {
+    private val start: MonthDay
+    private val end: MonthDay
+
+    init {
+        if (aEnd.isBefore(aStart)) throw IllegalArgumentException("終了月日を、開始月日より前にすることはできません")
+
+        start = aStart
+        end = aEnd
+    }
 
     fun contains(monthDay: MonthDay): Boolean {
-        return if (isSameMonthStartAndEnd()) {
-            caseSameMonthContains(monthDay)
-        } else {
-            caseDifferentMonthContains(monthDay)
-        }
-    }
+        if (monthDay.isBefore(start)) return false
 
-    private fun isSameMonthStartAndEnd(): Boolean {
-        return start.month == end.month
-    }
+        if (monthDay.isAfter(end)) return false
 
-    private fun caseSameMonthContains(monthDay: MonthDay): Boolean {
-        if (monthDay == start) return true
-
-        if (monthDay == end) return true
-
-        return monthDay.isAfter(start) && monthDay.isBefore(end)
-    }
-
-    private fun caseDifferentMonthContains(monthDay: MonthDay): Boolean {
-        if (start.month == monthDay.month && start.dayOfMonth <= monthDay.dayOfMonth)
-            return true
-
-        if (end.month == monthDay.month && end.dayOfMonth >= monthDay.dayOfMonth)
-            return true
-
-        return false
+        return true
     }
 }
