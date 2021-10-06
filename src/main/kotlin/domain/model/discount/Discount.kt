@@ -7,18 +7,21 @@ import domain.model.shared.Price
  * 割引額クラス
  */
 class Discount(
-    val price: Price
+    private val discountRate: DiscountRate, // 割引率
+    private val basePrice: Price //  割引前金額
 ) {
+    private val discountResult = calc()
 
-    companion object {
-        fun of(rate: DiscountRate, basePrice: Price): Discount {
-            val discountPrice = basePrice.value.div(rate.value)
+    fun discountPrice(): Price {
+        return Price(basePrice.value - discountResult.value)
+    }
 
-            val discountedPrice = basePrice.value - discountPrice
+    fun result(): Price {
+        return discountResult
+    }
 
-            return Discount(
-                Price.of(discountedPrice)
-            )
-        }
+    private fun calc(): Price {
+        val discountValue = basePrice.value.div(discountRate.value)
+        return Price.of(basePrice.value - discountValue)
     }
 }
