@@ -19,48 +19,30 @@ class DistanceKilometerDiscountRuleTest {
     inner class IsAbleEnabledTest() {
         @Test
         fun `片道の場合はfalseを返すこと`() {
-            val ticket = Ticket(
-                route = Route(Station.TOKYO, Station.HIMEJI),
-                departureDate = DepartureDate(LocalDate.now()),
-                ticketType = TicketType.ONE_WAY,
-                trainType =  TrainType.HIKARI,
-                seatType = SeatType.NON_RESERVED,
-                isChild = false
-            )
+            val ticketType = TicketType.ONE_WAY
+            val route = Route(Station.TOKYO, Station.HIMEJI)
 
-            val result = DistanceKilometerDiscountRule(ticket).can()
+            val result = DistanceKilometerDiscountRule(ticketType, route).can()
 
             Assertions.assertFalse(result)
         }
 
         @Test
         fun `往復の場合、片道の移動距離が601キロ以下の場合は、falseを返すこと`() {
-            val ticket = Ticket(
-                route = Route(Station.TOKYO, Station.SHIN_OSAKA),
-                departureDate = DepartureDate(LocalDate.now()),
-                ticketType = TicketType.ROUND_TRIP,
-                trainType = TrainType.HIKARI,
-                seatType = SeatType.NON_RESERVED,
-                isChild = false
-            )
+            val ticketType = TicketType.ROUND_TRIP
+            val route = Route(Station.TOKYO, Station.SHIN_OSAKA)
 
-            val result = DistanceKilometerDiscountRule(ticket).can()
+            val result = DistanceKilometerDiscountRule(ticketType, route).can()
 
             Assertions.assertFalse(result)
         }
 
         @Test
         fun `往復の場合、片道の移動距離が601キロ以上の場合は、trueを返すこと`() {
-            val ticket = Ticket(
-                route = Route(Station.TOKYO, Station.HIMEJI),
-                departureDate = DepartureDate(LocalDate.now()),
-                ticketType = TicketType.ROUND_TRIP,
-                trainType = TrainType.HIKARI,
-                seatType = SeatType.NON_RESERVED,
-                isChild = false
-            )
+            val ticketType = TicketType.ROUND_TRIP
+            val route = Route(Station.TOKYO, Station.HIMEJI)
 
-            val result = DistanceKilometerDiscountRule(ticket).can()
+            val result = DistanceKilometerDiscountRule(ticketType, route).can()
 
             Assertions.assertTrue(result)
         }
