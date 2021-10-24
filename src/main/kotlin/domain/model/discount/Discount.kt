@@ -2,6 +2,7 @@ package domain.model.discount
 
 import domain.model.discount.rate.DiscountRate
 import domain.model.shared.Price
+import lib.domainsupport.valueobject.ValueObject
 
 /**
  * 割引額クラス
