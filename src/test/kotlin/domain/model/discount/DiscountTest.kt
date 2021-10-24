@@ -10,47 +10,25 @@ import kotlin.math.exp
 
 class DiscountTest {
 
-    @Nested
-    @DisplayName("discountPriceのテスト")
-    inner class DiscountPriceTest() {
-        @Test
-        fun `10%の割引の場合の割引額が取得できること`() {
-            val discount = Discount(DiscountRate.RATE_10, Price(10000))
+   @Nested
+   @DisplayName("割引後金額計算")
+   inner class AfterDiscountedPriceTest() {
+       @Test
+       fun `割引金額が少数を含まない結果が正しいこと`() {
+           val price = Price(10000)
+           val discount = Discount.of(price, DiscountRate.RATE_10)
 
-            val expected = Price(1000)
+           val expected = Price(9000)
+           Assertions.assertEquals(expected, discount.afterDiscountedPrice())
+       }
 
-            Assertions.assertEquals(expected, discount.discountPrice())
-        }
+       @Test
+       fun `割引金額が少数を含む場合は切り捨てらていること`() {
+           val price = Price(10050)
+           val discount = Discount.of(price, DiscountRate.RATE_15)
 
-        @Test
-        fun `10%の割引金額に１円単位が含まれている場合は切り捨てられること`() {
-            val discount = Discount(DiscountRate.RATE_10, Price(10010))
-
-            val expected = Price(1010)
-
-            Assertions.assertEquals(expected, discount.discountPrice())
-        }
-    }
-
-    @Nested
-    @DisplayName("resultメソッドのテスト")
-    inner class ResultTest() {
-        @Test
-        fun `10%の割引後の金額が取得できること`() {
-            val discount = Discount(DiscountRate.RATE_10, Price(10000))
-
-            val expected = Price(9000)
-
-            Assertions.assertEquals(expected, discount.result())
-        }
-
-        @Test
-        fun `10%の割引後金額に１円単位が含まれている場合は切り捨てられること`() {
-            val discount = Discount(DiscountRate.RATE_10, Price(10010))
-
-            val expected = Price(9000)
-
-            Assertions.assertEquals(expected, discount.result())
-        }
-    }
+           val expected = Price(8540) // 10050 * 0.85 = 8542 -> 切り捨てが入って8540
+           Assertions.assertEquals(expected, discount.afterDiscountedPrice())
+       }
+   }
 }

@@ -3,26 +3,32 @@ package domain.model.discount
 import domain.model.discount.rate.DiscountRate
 import domain.model.shared.Price
 import lib.domainsupport.valueobject.ValueObject
+import java.lang.Math.floor
+import java.math.BigDecimal
 
 /**
  * 割引額クラス
  */
 class Discount(
-    private val discountRate: DiscountRate, // 割引率
-    private val basePrice: Price //  割引前金額
+    val basePrice: Price, //  割引前金額
+    val discount: Int // 割引後金額
 ) {
-    private val discountResult = calc()
+
+    fun afterDiscountedPrice(): Price {
+        val result = basePrice.value - discount
+        return Price.of(result)
+    }
 
     fun discountPrice(): Price {
-        return Price(basePrice.value - discountResult.value)
+        return Price.of(basePrice.value - afterDiscountedPrice().value)
     }
 
-    fun result(): Price {
-        return discountResult
-    }
-
-    private fun calc(): Price {
-        val discountValue = basePrice.value.div(discountRate.value)
-        return Price.of(basePrice.value - discountValue)
+    companion object {
+        fun of(basePrice: Price, discountRate: DiscountRate): Discount {
+           return Discount(
+               basePrice,
+               floor(basePrice.value * (discountRate.value / 100)).toInt()
+           )
+        }
     }
 }

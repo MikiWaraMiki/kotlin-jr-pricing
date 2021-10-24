@@ -22,6 +22,7 @@ class DiscountCalcService(
         GroupDiscountRule(passengers, ticket.departureDate)
     )
 
+    /*
     fun calc(): List<Discount> {
         val enabledDiscountRuleList = discountRuleList.filter {
             it.can()
@@ -31,4 +32,5 @@ class DiscountCalcService(
             Discount(it.rate(), basePrice)
         }
     }
+    */
 }
