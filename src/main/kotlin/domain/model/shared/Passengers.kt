@@ -1,4 +1,4 @@
-package domain.model.purcharse
+package domain.model.shared
 
 /**
  * 搭乗員数クラス

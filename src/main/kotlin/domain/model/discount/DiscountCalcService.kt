@@ -1,10 +1,9 @@
 package domain.model.discount
 
-import domain.model.discount.rate.DiscountRate
 import domain.model.discount.rule.DiscountRule
 import domain.model.discount.rule.DistanceKilometerDiscountRule
 import domain.model.discount.rule.GroupDiscountRule
-import domain.model.purcharse.Passengers
+import domain.model.shared.Passengers
 import domain.model.shared.Price
 import domain.model.ticket.Ticket
 

@@ -1,6 +1,6 @@
 package domain.model.discount.rule
 
-import domain.model.purcharse.Passengers
+import domain.model.shared.Passengers
 import domain.model.ticket.DepartureDate
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
