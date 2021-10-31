@@ -1,6 +1,6 @@
 package domain.model.discount.largegroup
 
-import domain.model.discount.rule.DiscountRule
+import domain.model.discount.DiscountRule
 import domain.model.shared.Passengers
 
 /**

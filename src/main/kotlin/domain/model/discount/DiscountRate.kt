@@ -1,4 +1,4 @@
-package domain.model.discount.rate
+package domain.model.discount
 
 import java.math.BigDecimal
 

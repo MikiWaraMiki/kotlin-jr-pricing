@@ -1,7 +1,7 @@
 package domain.model.discount.distance
 
 import domain.model.discount.DiscountPrice
-import domain.model.discount.rate.DiscountRate
+import domain.model.discount.DiscountRate
 import domain.model.shared.Price
 import kotlin.math.floor
 
