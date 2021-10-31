@@ -1,12 +1,7 @@
 package domain.model.discount.distance
 
-import domain.model.discount.Discount
-import domain.model.discount.rate.DiscountRate
-import domain.model.discount.rule.DiscountRule
-import domain.model.fare.Fare
+import domain.model.discount.DiscountRule
 import domain.model.route.Route
-import domain.model.shared.Price
-import domain.model.ticket.Ticket
 import domain.model.ticket.TicketType
 
 /**

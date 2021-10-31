@@ -1,6 +1,6 @@
 package domain.model.discount.group
 
-import domain.model.discount.rate.DiscountRate
+import domain.model.discount.DiscountRate
 import lib.domainsupport.valueobject.MonthDayRange
 import java.time.LocalDate
 import java.time.MonthDay

@@ -1,8 +1,7 @@
 package domain.model.discount.group
 
 import domain.model.discount.DiscountPrice
-import domain.model.discount.distance.DistanceDiscount
-import domain.model.discount.rate.DiscountRate
+import domain.model.discount.DiscountRate
 import domain.model.shared.Price
 import domain.model.ticket.DepartureDate
 import kotlin.math.floor
