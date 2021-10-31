@@ -20,16 +20,9 @@ class FareCalcServiceTest {
 
     @Test
     fun `大人料金の運賃が取得できること`() {
-        val ticket = Ticket(
-            Route(Station.TOKYO, Station.SHIN_OSAKA),
-            DepartureDate(LocalDate.now()),
-            TicketType.ONE_WAY,
-            TrainType.NOZOMI,
-            SeatType.RESERVED,
-            isChild = false
-        )
+        val route = Route(Station.TOKYO, Station.SHIN_OSAKA)
 
-        val result = fareCalcService.calcPrice(ticket)
+        val result = fareCalcService.calcPrice(route, false)
 
         val expected = Price(ADULT_TOKYO_SHINOSAKA_PRICE)
 
@@ -38,16 +31,9 @@ class FareCalcServiceTest {
 
     @Test
     fun `子供料金の運賃が取得できること`() {
-        val ticket = Ticket(
-            Route(Station.TOKYO, Station.SHIN_OSAKA),
-            DepartureDate(LocalDate.now()),
-            TicketType.ONE_WAY,
-            TrainType.NOZOMI,
-            SeatType.RESERVED,
-            isChild = true
-        )
+        val route = Route(Station.TOKYO, Station.SHIN_OSAKA)
 
-        val result = fareCalcService.calcPrice(ticket)
+        val result = fareCalcService.calcPrice(route, true)
 
         val expected = Price(CHILD_TOKYO_SHINOSAKA_PRICE)
 
