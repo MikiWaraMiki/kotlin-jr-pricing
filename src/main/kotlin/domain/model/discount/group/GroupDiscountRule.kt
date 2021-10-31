@@ -1,7 +1,7 @@
-package domain.model.discount.rule
+package domain.model.discount.group
 
 import domain.model.discount.rate.DiscountRate
-import domain.model.discount.rate.GroupDiscountRateCategory
+import domain.model.discount.rule.DiscountRule
 import domain.model.shared.Passengers
 import domain.model.ticket.DepartureDate
 

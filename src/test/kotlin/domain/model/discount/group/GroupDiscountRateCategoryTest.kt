@@ -1,5 +1,6 @@
-package domain.model.discount.rate
+package domain.model.discount.group
 
+import domain.model.discount.rate.DiscountRate
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

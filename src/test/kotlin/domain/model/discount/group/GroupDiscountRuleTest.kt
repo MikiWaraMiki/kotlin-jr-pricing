@@ -1,5 +1,6 @@
-package domain.model.discount.rule
+package domain.model.discount.group
 
+import domain.model.discount.group.GroupDiscountRule
 import domain.model.shared.Passengers
 import domain.model.ticket.DepartureDate
 import org.junit.jupiter.api.Assertions
