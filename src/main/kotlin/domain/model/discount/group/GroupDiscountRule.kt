@@ -10,11 +10,20 @@ import domain.model.ticket.DepartureDate
  */
 class GroupDiscountRule(
     private val passengers: Passengers,
-    private val departureDate: DepartureDate
 ): DiscountRule {
-    private val GREETER_THEN_PASSENGER_NUM = 8
-
     override fun can(): Boolean {
-        return passengers.totalPassengers() >= GREETER_THEN_PASSENGER_NUM
+        if (passengers.totalPassengers() < APPLY_MIN_PASSENGERS)
+            return false
+
+        if (passengers.totalPassengers() > APPLY_MAX_PASSENGERS)
+            return false
+
+        return true
     }
+
+    companion object {
+        private val APPLY_MIN_PASSENGERS = 8
+        private val APPLY_MAX_PASSENGERS = 30
+    }
+
 }
