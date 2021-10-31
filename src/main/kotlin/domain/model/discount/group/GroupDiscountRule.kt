@@ -17,8 +17,4 @@ class GroupDiscountRule(
     override fun can(): Boolean {
         return passengers.totalPassengers() >= GREETER_THEN_PASSENGER_NUM
     }
-
-    override fun rate(): DiscountRate {
-        return GroupDiscountRateCategory.rateFromDate(departureDate.date)
-    }
 }

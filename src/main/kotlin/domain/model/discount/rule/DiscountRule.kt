@@ -11,10 +11,4 @@ interface DiscountRule {
      * 割引が適用可能か検証する
      */
     fun can(): Boolean
-
-    /**
-     * 割引率を返す
-     */
-    fun rate(): DiscountRate
-
 }

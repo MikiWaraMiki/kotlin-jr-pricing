@@ -22,8 +22,4 @@ class DistanceKilometerDiscountRule(
 
         return route.isLongDistance()
     }
-
-    override fun rate(): DiscountRate {
-        return DiscountRate.RATE_10
-    }
 }
