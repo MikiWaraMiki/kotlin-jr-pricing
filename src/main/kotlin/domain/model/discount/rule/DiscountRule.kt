@@ -1,5 +1,6 @@
 package domain.model.discount.rule
 
+import domain.model.discount.Discount
 import domain.model.discount.rate.DiscountRate
 import domain.model.fare.Fare
 import domain.model.shared.Price
@@ -15,4 +16,5 @@ interface DiscountRule {
      * 割引率を返す
      */
     fun rate(): DiscountRate
+
 }
