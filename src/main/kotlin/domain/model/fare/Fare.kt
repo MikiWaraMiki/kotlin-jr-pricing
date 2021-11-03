@@ -8,7 +8,7 @@ import domain.model.shared.Price
 class Fare(aPrice: Price) {
     private val CHILD_DISCOUNT_RATE = 0.5
 
-    val price = aPrice
+    private val price = aPrice
 
     fun price(isChild: Boolean): Price {
         if (isChild) return childPrice()
