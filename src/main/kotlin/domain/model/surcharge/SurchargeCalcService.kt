@@ -1,8 +1,10 @@
 package domain.model.surcharge
 
+import domain.model.route.Route
 import domain.model.shared.Price
 import domain.model.season.SeasonType
 import domain.model.surcharge.additionalcharge.NozomiAdditionalChargeTable
+import domain.model.ticket.DepartureDate
 import domain.model.ticket.Ticket
 import domain.model.train.SeatType
 import domain.model.train.TrainType
@@ -13,32 +15,28 @@ import domain.model.train.TrainType
 class SurchargeCalcService {
     private val surchargeTable = SurchargeTable()
     private val nozomiAdditionalChargeTable = NozomiAdditionalChargeTable()
-    // 自由席割引料金
-    private val NON_RESERVED_DISCOUNT_PRICE = Price(530)
 
-    fun calcPrice(ticket: Ticket): Price {
-        val surchargeBasePrice = surchargeTable.price(ticket.route)
+    fun calcPrice(route: Route, trainType: TrainType, seatType: SeatType, departureDate: DepartureDate, isChild: Boolean): Price {
+        val surchargeBasePrice = surchargeTable.price(route)
         val surcharge = Surcharge(surchargeBasePrice)
 
-        if (ticket.useNozomi()) {
-            val additionalPrice = nozomiAdditionalChargeTable.price(ticket.route)
+        if (trainType.isNozomi()) {
+            val additionalPrice = nozomiAdditionalChargeTable.price(route)
             surcharge.addPrice(additionalPrice)
         }
 
-        if (ticket.useNonReservedSeat()) {
+        if (seatType.isReserved()) {
+            seasonTypeFareCalc(departureDate, surcharge)
+        }else {
             surcharge.discountPrice(NON_RESERVED_DISCOUNT_PRICE)
         }
 
-        if (ticket.useReservedSeat()) {
-            seasonTypeFareCalc(ticket, surcharge)
-        }
-
-        return surcharge.price(ticket.isChild)
+        return surcharge.price(isChild)
     }
 
     // TODO: surchargeを不変クラスにして切り出す
-    private fun seasonTypeFareCalc(ticket: Ticket, surcharge: Surcharge) {
-        when(SeasonType.of(ticket.departureDate.date)) {
+    private fun seasonTypeFareCalc(departureDate: DepartureDate, surcharge: Surcharge) {
+        when(SeasonType.of(departureDate.date)) {
             SeasonType.OFF_PEAK -> {
                 surcharge.discountPrice(Price(200))
             }
@@ -47,5 +45,9 @@ class SurchargeCalcService {
             }
             else -> {}
         }
+    }
+
+    companion object {
+        private val NON_RESERVED_DISCOUNT_PRICE = Price(530)
     }
 }

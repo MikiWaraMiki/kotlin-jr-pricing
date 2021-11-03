@@ -7,6 +7,10 @@ enum class SeatType(private val label: String) {
     NON_RESERVED("non_reserved"),
     RESERVED("reserved");
 
+    fun isReserved(): Boolean {
+        return this == RESERVED
+    }
+
     companion object {
         fun fromLabel(label: String): SeatType {
             return values().firstOrNull() { it.label == label } ?:

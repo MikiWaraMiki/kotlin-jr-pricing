@@ -9,6 +9,10 @@ enum class TrainType(private val label: String) {
     HIKARI("hikari"),
     NOZOMI("nozomi");
 
+    fun isNozomi(): Boolean {
+        return this == NOZOMI
+    }
+
     companion object {
         fun fromLabel(label: String): TrainType {
             return values().firstOrNull() { it.label == label } ?:
