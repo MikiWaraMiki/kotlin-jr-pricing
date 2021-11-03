@@ -6,7 +6,7 @@ import kotlin.math.min
 /**
  * 割引適用人数クラス
  */
-class DiscountPassengerCount(
+class FreePassengerCount(
     private val passengers: Passengers
 ) {
     private val noChargePassengersNum = passengers.totalPassengers() / DISCOUNT_PER_NUMBER

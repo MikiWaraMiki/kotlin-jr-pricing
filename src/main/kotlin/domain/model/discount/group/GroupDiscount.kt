@@ -1,6 +1,7 @@
 package domain.model.discount.group
 
-import domain.model.discount.DiscountPrice
+import domain.model.discount.DiscountName
+import domain.model.discount.Discount
 import domain.model.discount.DiscountRate
 import domain.model.shared.Price
 import domain.model.ticket.DepartureDate
@@ -12,7 +13,8 @@ import kotlin.math.floor
 class GroupDiscount private constructor(
     private val basePrice: Price,
     private val discountRate: DiscountRate
-): DiscountPrice {
+): Discount {
+    override val discountName = DiscountName("通常団体（乗車人数が8人以上30人以下の場合に適用）")
 
     override fun afterDiscountedPrice(): Price {
         val discount = floor(basePrice.value * (discountRate.value / 100)).toInt()
