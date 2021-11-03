@@ -17,7 +17,8 @@ class LargeGroupDiscountTest {
 
         val largeGroupDiscount = LargeGroupDiscount(fare, surcharge, passengers)
 
-        Assertions.assertEquals(Price(2000), largeGroupDiscount.afterDiscountedPrice())
+        val expected = Price((1000 + 1000) * 49)
+        Assertions.assertEquals(expected, largeGroupDiscount.afterDiscountedPrice())
     }
 
     @Test
@@ -29,7 +30,9 @@ class LargeGroupDiscountTest {
 
         val largeGroupDiscount = LargeGroupDiscount(fare, surcharge, passengers)
 
-        Assertions.assertEquals(Price(2000 * 2), largeGroupDiscount.afterDiscountedPrice())
+        val expected = Price((1000 + 1000) * 98)
+
+        Assertions.assertEquals(expected, largeGroupDiscount.afterDiscountedPrice())
     }
 
     @Test
@@ -41,7 +44,7 @@ class LargeGroupDiscountTest {
 
         val largeGroupDiscount = LargeGroupDiscount(fare, surcharge, passengers)
 
-        val expected = Price(500 + 500)
+        val expected = Price((500 + 500) * 49)
         Assertions.assertEquals(expected, largeGroupDiscount.afterDiscountedPrice())
     }
 
@@ -54,7 +57,7 @@ class LargeGroupDiscountTest {
 
         val largeGroupDiscount = LargeGroupDiscount(fare, surcharge, passengers)
 
-        val expected = Price((500 + 500) * 2)
+        val expected = Price((500 + 500) * 98)
 
         Assertions.assertEquals(expected, largeGroupDiscount.afterDiscountedPrice())
     }
@@ -67,7 +70,21 @@ class LargeGroupDiscountTest {
         val passengers = Passengers(1, 99)
         val largeGroupDiscount = LargeGroupDiscount(fare, surcharge, passengers)
 
-        val expected = Price((1000 + 1000) + (500 + 500))
+        val expected = Price( (1000 + 1000) * 0 + (500 + 500) * 98)
+
+        Assertions.assertEquals(expected, largeGroupDiscount.afterDiscountedPrice())
+    }
+
+    @Test
+    fun `大人99人・子供1人の場合は、大人2人分の運賃特急料金が割引されていること`() {
+        val fare = Fare(Price(1000))
+        val surcharge = Surcharge(Price(1000))
+
+        val passengers = Passengers(99, 1)
+
+        val largeGroupDiscount = LargeGroupDiscount(fare, surcharge, passengers)
+
+        val expected = Price( (1000 + 1000) * 97 + (500 + 500) * 1)
 
         Assertions.assertEquals(expected, largeGroupDiscount.afterDiscountedPrice())
     }

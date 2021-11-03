@@ -10,19 +10,19 @@ import domain.model.surcharge.Surcharge
 /**
  * 特別団体割引クラス
  */
-class LargeGroupDiscount(private val fare: Fare, private val surcharge: Surcharge, passengers: Passengers): Discount {
+class LargeGroupDiscount(private val fare: Fare, private val surcharge: Surcharge,  private val passengers: Passengers): Discount {
     override val discountName = DiscountName("団体割引（乗員人数が31人以上の場合に適用）")
 
-    private val discountPassengerCount = FreePassengerCount(passengers)
+    private val freePassengerCount = FreePassengerCount(passengers)
 
     override fun afterDiscountedPrice(): Price {
         val discountPriceResult = mutableListOf<Price>()
 
-        if (discountPassengerCount.adultDiscountNumber() >= 1) {
+        if ( (passengers.adults - freePassengerCount.adultDiscountNumber()) >= 1) {
             discountPriceResult.add(adultDiscountPrice())
         }
         
-        if (discountPassengerCount.childDiscountNumber() >= 1) {
+        if ( (passengers.childs - freePassengerCount.childDiscountNumber()) >= 1) {
             discountPriceResult.add(childDiscountPrice())
         }
         
@@ -32,26 +32,23 @@ class LargeGroupDiscount(private val fare: Fare, private val surcharge: Surcharg
     }
 
     private fun adultDiscountPrice(): Price {
-        val adultFareDiscountTotal = Price(
-            fare.price(false).value * discountPassengerCount.adultDiscountNumber()
-        )
-        val adultSurchargeDiscountTotal = Price(
-            surcharge.price(false).value * discountPassengerCount.adultDiscountNumber()
-        )
-
-        return Price(adultFareDiscountTotal.value + adultSurchargeDiscountTotal.value)
+        return discountedPrice(false, passengers.adults - freePassengerCount.adultDiscountNumber())
     }
 
     private fun childDiscountPrice(): Price {
-        val childFareDiscountTotal = Price(
-            fare.price(true).value * discountPassengerCount.childDiscountNumber()
+        return discountedPrice(true, passengers.childs - freePassengerCount.childDiscountNumber())
+    }
+
+    private fun discountedPrice(isChild: Boolean, passengerCount: Int): Price {
+        val fareTotal = Price(
+            fare.price(isChild).value * passengerCount
         )
 
-        val childSurchargeDiscountTotal = Price(
-            surcharge.price(true).value * discountPassengerCount.childDiscountNumber()
+        val surchargeTotal = Price(
+            surcharge.price(isChild).value * passengerCount
         )
 
-        return Price(childFareDiscountTotal.value + childSurchargeDiscountTotal.value)
+        return Price(fareTotal.value + surchargeTotal.value)
     }
 
 
