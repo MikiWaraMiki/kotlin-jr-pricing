@@ -10,18 +10,14 @@ import domain.model.surcharge.Surcharge
 /**
  * 特別団体割引クラス
  */
-class LargeGroupDiscount(
-    private val fare: Fare,
-    private val surcharge: Surcharge,
-    private val passengers: Passengers
-): Discount {
+class LargeGroupDiscount(private val fare: Fare, private val surcharge: Surcharge, passengers: Passengers): Discount {
     override val discountName = DiscountName("団体割引（乗員人数が31人以上の場合に適用）")
 
     private val discountPassengerCount = FreePassengerCount(passengers)
-    private val discountPriceResult = mutableListOf<Price>()
-
 
     override fun afterDiscountedPrice(): Price {
+        val discountPriceResult = mutableListOf<Price>()
+
         if (discountPassengerCount.adultDiscountNumber() >= 1) {
             discountPriceResult.add(adultDiscountPrice())
         }

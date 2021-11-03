@@ -15,7 +15,7 @@ class DistanceDiscount private constructor(
     private val basePrice: Price
 ): Discount {
     override val discountName = DiscountName("長距離往復割引")
-    
+
     override fun afterDiscountedPrice(): Price {
         val discount = floor(basePrice.value * (DISCOUNT_RATE.value / 100)).toInt()
         return Price.of(basePrice.value - discount)
