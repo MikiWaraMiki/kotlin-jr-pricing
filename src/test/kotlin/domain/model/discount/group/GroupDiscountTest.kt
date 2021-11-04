@@ -1,31 +1,40 @@
 package domain.model.discount.group
 
+import domain.model.discount.DiscountRate
+import domain.model.fare.Fare
 import domain.model.shared.Price
 import domain.model.ticket.DepartureDate
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 class GroupDiscountTest {
 
-    @Test
-    fun `割引率が10%の適用期間中の割引金額が正しいこと`() {
-        val basePrice = Price(10000)
-        val departureDate = DepartureDate(LocalDate.of(2021, 12, 21))
+    @Nested
+    inner class AfterDiscountFareTest() {
+        @Test
+        fun `割引率が10%の割引金額が正しいこと`() {
+            val fare = Fare(Price(10000))
+            val discountRate = DiscountRate.RATE_10
 
-        val discount = GroupDiscount.fromDepartureDate(basePrice, departureDate)
+            val discount = GroupDiscount(fare, discountRate)
 
-        Assertions.assertEquals(Price(9000), discount.afterDiscountedPrice())
-    }
+            val result = discount.afterDiscountFare()
 
-    @Test
-    fun `割引率が15%の適用期間中の割引金額が正しいこと`() {
-        val basePrice = Price(10050)
-        val departureDate = DepartureDate(LocalDate.of(2021, 12, 20))
+            Assertions.assertEquals(Price(9000), result.price(false))
+        }
 
-        val discount = GroupDiscount.fromDepartureDate(basePrice, departureDate)
+        @Test
+        fun `割引率が15%の割引金額が正しいこと`() {
+            val fare = Fare(Price(10050))
+            val discountRate = DiscountRate.RATE_15
 
-        val expected = Price(8540) // 10050 * 0.85 = 8,542 -> 1円単位切り捨てで8,540
-        Assertions.assertEquals(Price(8540), discount.afterDiscountedPrice())
+            val discount = GroupDiscount(fare, discountRate)
+
+            val result = discount.afterDiscountFare()
+
+            Assertions.assertEquals(Price(8540), result.price(false))
+        }
     }
 }
