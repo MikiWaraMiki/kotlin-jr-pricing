@@ -18,7 +18,7 @@ class LargeGroupFareDiscount(
 
     private val freePassengerCount = FreePassengerCount(passengers)
 
-    fun afterDiscounted(): Price {
+    override fun afterDiscounted(): Price {
         val adults = passengers.adults - freePassengerCount.adultDiscountNumber()
         val childs = passengers.childs - freePassengerCount.childDiscountNumber()
 
