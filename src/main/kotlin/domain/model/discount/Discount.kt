@@ -1,6 +1,7 @@
 package domain.model.discount
 
 import domain.model.fare.Fare
+import domain.model.shared.Passengers
 import domain.model.shared.Price
 import domain.model.surcharge.Surcharge
 
@@ -9,14 +10,9 @@ import domain.model.surcharge.Surcharge
  */
 interface Discount {
     val discountName: DiscountName
-    fun afterDiscountedPrice(): Price
 }
 
-interface FareDiscount : Discount {
-    val fare: Fare
-    fun afterDiscountFare(): Fare
-}
-
-interface SurchargeDiscount: Discount {
-    fun afterDiscountSurcharge(): Surcharge
+interface GroupDiscount: Discount {
+    override val discountName: DiscountName
+    val passengers: Passengers
 }
