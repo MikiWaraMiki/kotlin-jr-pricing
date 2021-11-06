@@ -10,14 +10,14 @@ import domain.model.train.TrainType
 class Ticket(
     val route: Route,
     val departureDate: DepartureDate,
-    val ticketType: TicketType,
+    val tripType: TripType,
     val trainType: TrainType,
     val seatType: SeatType,
     val isChild: Boolean
 ) {
 
     fun isOneway(): Boolean {
-        return ticketType == TicketType.ONE_WAY
+        return tripType == TripType.ONE_WAY
     }
 
     fun isLongDistance(): Boolean {

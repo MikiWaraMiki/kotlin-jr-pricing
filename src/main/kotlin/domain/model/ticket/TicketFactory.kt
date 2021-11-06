@@ -27,7 +27,7 @@ interface TicketFactory {
 
         val route = Route(departureStation, arrivalStation)
 
-        val ticketType = TicketType.of(ticketTypeLabel)
+        val tripType = TripType.of(ticketTypeLabel)
         val trainType = TrainType.fromLabel(trainTypeLabel)
         val seatType = SeatType.fromLabel(seatTypeLabel)
 
@@ -35,7 +35,7 @@ interface TicketFactory {
         return Ticket(
             route,
             departureDate,
-            ticketType,
+            tripType,
             trainType,
             seatType,
             isChild

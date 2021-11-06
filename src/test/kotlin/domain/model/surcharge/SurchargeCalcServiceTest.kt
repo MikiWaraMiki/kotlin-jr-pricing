@@ -4,8 +4,6 @@ import domain.model.shared.Price
 import domain.model.route.Route
 import domain.model.station.Station
 import domain.model.ticket.DepartureDate
-import domain.model.ticket.Ticket
-import domain.model.ticket.TicketType
 import domain.model.train.SeatType
 import domain.model.train.TrainType
 import org.junit.jupiter.api.Assertions
