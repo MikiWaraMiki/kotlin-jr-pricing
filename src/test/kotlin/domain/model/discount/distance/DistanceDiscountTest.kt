@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class DistanceDiscountTest {
 
     @Nested
-    inner class afterDiscountFare() {
+    inner class AfterDiscounted() {
         @Test
         fun `運賃が10%割引されること`() {
             val fare = Fare(Price(10010))
