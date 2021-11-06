@@ -1,6 +1,7 @@
 package domain.model.fare
 
 import domain.model.route.Route
+import domain.model.shared.Passengers
 import domain.model.shared.Price
 import domain.model.ticket.Ticket
 
@@ -10,10 +11,12 @@ import domain.model.ticket.Ticket
 class FareCalcService {
     private val fareTable = FareTable()
 
-    fun calcPrice(route: Route, isChild: Boolean): Price {
+    fun calcPrice(route: Route, passengers: Passengers): Price {
         val farePrice = fareTable.price(route)
         val fare = Fare(farePrice)
 
-        return fare.price(isChild)
+        val fareCalcResult = FareCalcResult(fare, passengers)
+
+        return fareCalcResult.total()
     }
 }
