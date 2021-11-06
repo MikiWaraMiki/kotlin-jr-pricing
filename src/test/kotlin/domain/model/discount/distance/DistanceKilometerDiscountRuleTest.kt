@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 
 class DistanceKilometerDiscountRuleTest {
     @Nested
-    @DisplayName("isAbleEnabledメソッドのテスト")
-    inner class IsAbleEnabledTest() {
+    @DisplayName("canメソッドのテスト")
+    inner class CanTest() {
         @Test
         fun `片道の場合はfalseを返すこと`() {
             val tripType = TripType.ONE_WAY
