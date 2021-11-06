@@ -1,6 +1,5 @@
 package domain.model.discount.largegroup
 
-import domain.model.discount.AfterDiscountedFare
 import domain.model.discount.Discount
 import domain.model.discount.DiscountName
 import domain.model.fare.Fare

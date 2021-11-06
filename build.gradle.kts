@@ -21,7 +21,7 @@ dependencies {
     implementation("io.ktor:ktor-html-builder:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
 
-    testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+    testImplementation("io.mockk:mockk:1.12.0")
 }
 
 tasks.test {

@@ -15,9 +15,9 @@ class DistanceKilometerDiscountRuleTest {
         @Test
         fun `片道の場合はfalseを返すこと`() {
             val tripType = TripType.ONE_WAY
-            val route = Route(Station.TOKYO, Station.HIMEJI)
+            val tripDistance = 601
 
-            val result = DistanceKilometerDiscountRule(tripType, route).can()
+            val result = DistanceKilometerDiscountRule(tripType, tripDistance).can()
 
             Assertions.assertFalse(result)
         }
@@ -25,9 +25,9 @@ class DistanceKilometerDiscountRuleTest {
         @Test
         fun `往復の場合、片道の移動距離が601キロ以下の場合は、falseを返すこと`() {
             val tripType = TripType.ROUND_TRIP
-            val route = Route(Station.TOKYO, Station.SHIN_OSAKA)
+            val tripDistance = 600
 
-            val result = DistanceKilometerDiscountRule(tripType, route).can()
+            val result = DistanceKilometerDiscountRule(tripType, tripDistance).can()
 
             Assertions.assertFalse(result)
         }
@@ -35,9 +35,9 @@ class DistanceKilometerDiscountRuleTest {
         @Test
         fun `往復の場合、片道の移動距離が601キロ以上の場合は、trueを返すこと`() {
             val tripType = TripType.ROUND_TRIP
-            val route = Route(Station.TOKYO, Station.HIMEJI)
+            val tripDistance = 601
 
-            val result = DistanceKilometerDiscountRule(tripType, route).can()
+            val result = DistanceKilometerDiscountRule(tripType, tripDistance).can()
 
             Assertions.assertTrue(result)
         }

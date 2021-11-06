@@ -9,12 +9,16 @@ import domain.model.ticket.TripType
  */
 class DistanceKilometerDiscountRule(
     private val tripType: TripType,
-    private val route: Route
+    private val tripDistance: Int
 ): DiscountRule {
 
     override fun can(): Boolean {
         if (tripType.isOneway()) return  false
 
-        return route.isLongDistance()
+       return tripDistance >= 601
+    }
+
+    companion object {
+        private const val LONG_DISTANCE = 601
     }
 }

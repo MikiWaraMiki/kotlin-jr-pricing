@@ -1,6 +1,5 @@
 package domain.model.discount.distance
 
-import domain.model.discount.AfterDiscountedFare
 import domain.model.discount.DiscountName
 import domain.model.discount.Discount
 import domain.model.discount.DiscountRate
