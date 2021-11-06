@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
-class GroupDiscountTest {
 
+class GroupDiscountTest {
     @Nested
     inner class AfterDiscountFareTest() {
         @Test
@@ -20,9 +20,10 @@ class GroupDiscountTest {
 
             val discount = GroupDiscount(fare, discountRate)
 
-            val result = discount.afterDiscountFare()
+            val afterDiscountedFare = discount.afterDiscountFare()
 
-            Assertions.assertEquals(Price(9000), result.price(false))
+            Assertions.assertEquals(Price(9000), afterDiscountedFare.fare.price(false))
+            Assertions.assertEquals(Price(4500), afterDiscountedFare.fare.price(true))
         }
 
         @Test
@@ -32,9 +33,10 @@ class GroupDiscountTest {
 
             val discount = GroupDiscount(fare, discountRate)
 
-            val result = discount.afterDiscountFare()
+            val afterDiscountedFare = discount.afterDiscountFare()
 
-            Assertions.assertEquals(Price(8540), result.price(false))
+            Assertions.assertEquals(Price(8540), afterDiscountedFare.fare.price(false))
+            Assertions.assertEquals(Price(4270), afterDiscountedFare.fare.price(true))
         }
     }
 }
