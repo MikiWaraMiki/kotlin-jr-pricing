@@ -15,12 +15,12 @@ class GroupDiscount(
 ): Discount {
     override val discountName = DiscountName("通常団体（乗車人数が8人以上30人以下の場合に適用）")
 
-    fun afterDiscountFare(): AfterDiscountedFare {
+    fun afterDiscounted(): Price {
         val discount = floor(fare.price(false).value * discountRate.few()).toInt()
 
         val discountResult = fare.price(false).value - discount
 
-        return AfterDiscountedFare.fromPrice(Price.of(discountResult))
+        return Price.of(discountResult)
     }
 
     companion object {

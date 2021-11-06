@@ -20,10 +20,9 @@ class GroupDiscountTest {
 
             val discount = GroupDiscount(fare, discountRate)
 
-            val afterDiscountedFare = discount.afterDiscountFare()
+            val result = discount.afterDiscounted()
 
-            Assertions.assertEquals(Price(9000), afterDiscountedFare.fare.price(false))
-            Assertions.assertEquals(Price(4500), afterDiscountedFare.fare.price(true))
+            Assertions.assertEquals(Price(9000), result)
         }
 
         @Test
@@ -33,10 +32,9 @@ class GroupDiscountTest {
 
             val discount = GroupDiscount(fare, discountRate)
 
-            val afterDiscountedFare = discount.afterDiscountFare()
+            val result = discount.afterDiscounted()
 
-            Assertions.assertEquals(Price(8540), afterDiscountedFare.fare.price(false))
-            Assertions.assertEquals(Price(4270), afterDiscountedFare.fare.price(true))
+            Assertions.assertEquals(Price(8540), result)
         }
     }
 }
