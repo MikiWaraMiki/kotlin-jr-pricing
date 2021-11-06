@@ -12,7 +12,7 @@ import java.time.LocalDate
 
 class GroupDiscountTest {
     @Nested
-    inner class AfterDiscountFareTest() {
+    inner class AfterDiscounted() {
         @Test
         fun `割引率が10%の割引金額が正しいこと`() {
             val fare = Fare(Price(10000))
