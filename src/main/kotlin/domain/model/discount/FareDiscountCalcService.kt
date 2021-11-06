@@ -35,19 +35,30 @@ class FareDiscountCalcService(
             fare
         }
 
-        return when {
+        when {
             groupDiscountRule.can() -> {
                 val groupDiscount = GroupDiscount.fromDepartureDate(afterDiscountedFare, departureDate)
-                groupDiscount.afterDiscounted()
+                val discountedFarePrice = groupDiscount.afterDiscounted()
+                val discountedFare = Fare(discountedFarePrice)
+
+                return total(discountedFare, passengers)
             }
             largeGroupDiscountRule.can() -> {
                 val largeGroupFareDiscount = LargeGroupFareDiscount(afterDiscountedFare, passengers)
                 return largeGroupFareDiscount.afterDiscounted()
             }
             else -> {
-                afterDiscountedFare.price(false)
+                return total(afterDiscountedFare, passengers)
             }
         }
+    }
+
+    // TODO: 設計見直す
+    private fun total(discountedFare: Fare, passengers: Passengers): Price {
+        val adultTotal = discountedFare.price(false).value * passengers.adults
+        val childTotal = discountedFare.price(true).value * passengers.childs
+
+        return Price.of(adultTotal + childTotal)
     }
 
     companion object {

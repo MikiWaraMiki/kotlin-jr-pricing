@@ -4,6 +4,7 @@ import domain.model.discount.DiscountName
 import domain.model.discount.Discount
 import domain.model.discount.DiscountRate
 import domain.model.fare.Fare
+import domain.model.shared.Passengers
 import domain.model.shared.Price
 import kotlin.math.floor
 
