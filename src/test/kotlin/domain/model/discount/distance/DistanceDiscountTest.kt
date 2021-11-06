@@ -17,10 +17,7 @@ class DistanceDiscountTest {
 
             val distanceDiscount = DistanceDiscount(fare)
 
-            val afterDiscountedFare = distanceDiscount.afterDiscountFare()
-
-            Assertions.assertEquals(Price(9000), afterDiscountedFare.fare.price(false))
-            Assertions.assertEquals(Price(4500), afterDiscountedFare.fare.price(true))
+            Assertions.assertEquals(Price(9000), distanceDiscount.afterDiscounted())
         }
     }
 }
