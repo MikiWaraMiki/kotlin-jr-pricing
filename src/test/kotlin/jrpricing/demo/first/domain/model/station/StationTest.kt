@@ -1,5 +1,6 @@
 package jrpricing.demo.first.domain.model.station
 
+import jrpricing.demo.first.domain.model.exception.DomainException
 import org.junit.jupiter.api.*
 
 class StationTest {
@@ -16,11 +17,10 @@ class StationTest {
 
         @Test
         fun `存在しない駅の場合は、例外が発生すること`() {
-            val error = assertThrows<IllegalArgumentException> {
-                Station.fromLabel("miyagi")
-            }
+            val target: () -> Unit = { Station.fromLabel("miyagi") }
 
-            Assertions.assertEquals("存在しない駅です", error.message)
+            val exception = assertThrows<DomainException>(target)
+            Assertions.assertEquals("存在しない駅です", exception.message)
         }
     }
 }

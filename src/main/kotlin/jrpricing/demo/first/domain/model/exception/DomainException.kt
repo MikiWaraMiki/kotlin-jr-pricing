@@ -5,6 +5,6 @@ package jrpricing.demo.first.domain.model.exception
  */
 class DomainException(
     val errorMessage: String,
-    val errorCode: ErrorCode,
+    val errorCode: ErrorCode = ErrorCode.UNKNOWN,
 ): RuntimeException(errorMessage) {
 }
