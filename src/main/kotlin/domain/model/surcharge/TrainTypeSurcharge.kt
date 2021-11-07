@@ -23,7 +23,7 @@ class TrainTypeSurcharge private constructor(
     }
 
     companion object {
-        fun from(surcharge: Surcharge, route: Route, trainType: TrainType): Surcharge {
+        fun calc(surcharge: Surcharge, route: Route, trainType: TrainType): Surcharge {
             if (!trainType.isNozomi()) return surcharge
 
             return TrainTypeSurcharge(surcharge, route).applyedSurcharge()
