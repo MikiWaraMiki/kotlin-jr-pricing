@@ -4,6 +4,7 @@ import jrpricing.demo.first.domain.model.discount.SurchargeDiscountCalcService
 import jrpricing.demo.first.domain.model.route.Route
 import jrpricing.demo.first.domain.model.shared.Passengers
 import jrpricing.demo.first.domain.model.ticket.DepartureDate
+import jrpricing.demo.first.domain.model.ticket.TripType
 import jrpricing.demo.first.domain.model.train.SeatType
 import jrpricing.demo.first.domain.model.train.TrainType
 
@@ -20,7 +21,8 @@ class SurchargeCalcService(
         trainType: TrainType,
         seatType: SeatType,
         departureDate: DepartureDate,
-        passengers: Passengers
+        passengers: Passengers,
+        tripType: TripType
     ): SurchargeCalcResult {
         val surchargeBasePrice = surchargeTable.price(route)
         val baseSurcharge = Surcharge(surchargeBasePrice)
@@ -35,6 +37,6 @@ class SurchargeCalcService(
 
         val afterDiscountedSurcharge = AfterDiscountedSurcharge(discountedResultPrice)
 
-        return SurchargeCalcResult(beforeDiscountedSurcharge, afterDiscountedSurcharge)
+        return SurchargeCalcResult(beforeDiscountedSurcharge, afterDiscountedSurcharge, tripType)
     }
 }

@@ -23,7 +23,7 @@ object UsecaseInputCreator {
         tripType: TripType = TripType.ROUND_TRIP,
         trainType: TrainType = TrainType.HIKARI,
         seatType: SeatType = SeatType.RESERVED,
-        passengers: Passengers = Passengers(1, 1),
+        passengers: Passengers = Passengers(1, 0),
         departureDate: DepartureDate = DepartureDateCreator.OFF_PEAK_DEPARTURE_DATE
     ): UsecaseInput {
         return UsecaseInput(

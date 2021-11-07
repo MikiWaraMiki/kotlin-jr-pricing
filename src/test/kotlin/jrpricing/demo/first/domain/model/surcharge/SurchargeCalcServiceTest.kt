@@ -10,6 +10,7 @@ import jrpricing.demo.first.domain.model.train.SeatType
 import jrpricing.demo.first.domain.model.train.TrainType
 import io.mockk.every
 import io.mockk.mockk
+import jrpricing.demo.first.domain.model.ticket.TripType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -25,6 +26,7 @@ class SurchargeCalcServiceTest {
         val route = Route(Station.TOKYO, Station.SHIN_OSAKA)
         val trainType = TrainType.HIKARI
         val seatType = SeatType.RESERVED
+        val tripType = TripType.ONE_WAY
         val passengers = Passengers(1, 0)
 
         every { mockSurchargeDiscountedSurcharge.calc(allAny(), allAny()) }.returns(Price(5490))
@@ -35,7 +37,8 @@ class SurchargeCalcServiceTest {
             trainType,
             seatType,
             REGULAR_DEPATURE_DATE,
-            passengers
+            passengers,
+            tripType
         )
 
         val expectedPrice = Price(5490) // 東京->新大阪
@@ -50,6 +53,7 @@ class SurchargeCalcServiceTest {
         val trainType = TrainType.HIKARI
         val seatType = SeatType.RESERVED
         val passengers = Passengers(0, 1)
+        val tripType = TripType.ONE_WAY
 
         every { mockSurchargeDiscountedSurcharge.calc(allAny(), allAny()) }.returns(Price(2740))
         val surchargeCalcService = SurchargeCalcService(mockSurchargeDiscountedSurcharge)
@@ -59,7 +63,8 @@ class SurchargeCalcServiceTest {
             trainType,
             seatType,
             REGULAR_DEPATURE_DATE,
-            passengers
+            passengers,
+            tripType
         )
 
         val expectedPrice = Price(2740) // 東京->新大阪
@@ -75,6 +80,7 @@ class SurchargeCalcServiceTest {
         val trainType = TrainType.HIKARI
         val seatType = SeatType.NON_RESERVED
         val passengers = Passengers(1, 0)
+        val tripType = TripType.ONE_WAY
 
         every { mockSurchargeDiscountedSurcharge.calc(allAny(), allAny()) }.returns(Price(5490 - 530))
         val surchargeCalcService = SurchargeCalcService(mockSurchargeDiscountedSurcharge)
@@ -84,7 +90,8 @@ class SurchargeCalcServiceTest {
             trainType,
             seatType,
             REGULAR_DEPATURE_DATE,
-            passengers
+            passengers,
+            tripType
         )
 
         val expectedPrice = Price(5490 - 530) // 東京->新大阪
@@ -99,6 +106,7 @@ class SurchargeCalcServiceTest {
         val trainType = TrainType.NOZOMI
         val seatType = SeatType.RESERVED
         val passengers = Passengers(1, 0)
+        val tripType = TripType.ONE_WAY
 
         every { mockSurchargeDiscountedSurcharge.calc(allAny(), allAny()) }.returns(Price(5490 + 320))
         val surchargeCalcService = SurchargeCalcService(mockSurchargeDiscountedSurcharge)
@@ -108,7 +116,8 @@ class SurchargeCalcServiceTest {
             trainType,
             seatType,
             REGULAR_DEPATURE_DATE,
-            passengers
+            passengers,
+            tripType
         )
 
         val expectedPrice = Price(
@@ -126,6 +135,7 @@ class SurchargeCalcServiceTest {
         val trainType = TrainType.NOZOMI
         val seatType = SeatType.RESERVED
         val passengers = Passengers(1, 0)
+        val tripType = TripType.ONE_WAY
 
         every { mockSurchargeDiscountedSurcharge.calc(allAny(), allAny()) }.returns(Price(5490 + 320 + 200))
         val surchargeCalcService = SurchargeCalcService(mockSurchargeDiscountedSurcharge)
@@ -136,7 +146,8 @@ class SurchargeCalcServiceTest {
             trainType,
             seatType,
             PEAK_DEPARTURE_DATE,
-            passengers
+            passengers,
+            tripType
         )
 
         val expectedPrice = Price(
@@ -153,6 +164,7 @@ class SurchargeCalcServiceTest {
         val trainType = TrainType.NOZOMI
         val seatType = SeatType.RESERVED
         val passengers = Passengers(1, 0)
+        val tripType = TripType.ONE_WAY
 
         every { mockSurchargeDiscountedSurcharge.calc(allAny(), allAny()) }.returns(Price(5490 + 320 - 200))
         val surchargeCalcService = SurchargeCalcService(mockSurchargeDiscountedSurcharge)
@@ -163,7 +175,8 @@ class SurchargeCalcServiceTest {
             trainType,
             seatType,
             OFF_PEAK_DEPARTURE_DATE,
-            passengers
+            passengers,
+            tripType
         )
 
         val expectedPrice = Price(
@@ -180,6 +193,7 @@ class SurchargeCalcServiceTest {
         val trainType = TrainType.NOZOMI
         val seatType = SeatType.RESERVED
         val passengers = Passengers(50, 0)
+        val tripType = TripType.ONE_WAY
 
         every { mockSurchargeDiscountedSurcharge.calc(allAny(), allAny()) }.returns(Price(5490 * 49))
         val surchargeCalcService = SurchargeCalcService(mockSurchargeDiscountedSurcharge)
@@ -189,7 +203,8 @@ class SurchargeCalcServiceTest {
             trainType,
             seatType,
             OFF_PEAK_DEPARTURE_DATE,
-            passengers
+            passengers,
+            tripType
         )
 
         val expectedPrice = Price(5490 * 49)
