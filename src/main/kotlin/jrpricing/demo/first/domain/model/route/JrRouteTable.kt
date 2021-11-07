@@ -1,5 +1,7 @@
 package jrpricing.demo.first.domain.model.route
 
+import jrpricing.demo.first.domain.model.exception.DomainException
+import jrpricing.demo.first.domain.model.exception.ErrorCode
 import jrpricing.demo.first.domain.model.station.Station
 
 /**
@@ -15,10 +17,10 @@ class JrRouteTable {
             val routeTable = JrRouteTable()
 
             val arrivalStationList = routeTable.table[departureStation] ?:
-            throw IllegalArgumentException("経路表に登録されていない出発駅です")
+            throw DomainException("経路表に登録されていない出発駅です", ErrorCode.INVALID_INPUT)
 
             if (!arrivalStationList.contains(arrivalStation)) {
-                throw IllegalArgumentException("経路表に登録されていない到着駅です")
+                throw DomainException("経路表に登録されていない到着駅です", ErrorCode.INVALID_INPUT)
             }
 
             return Route(departureStation, arrivalStation)
