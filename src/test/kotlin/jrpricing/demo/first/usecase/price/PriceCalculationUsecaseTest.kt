@@ -15,16 +15,13 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class PriceCalculationUsecaseTest {
-    private val fareCalcService: FareCalcService = mockk()
-    private val surchargeCalcService: SurchargeCalcService = mockk()
-
     @Test
     fun `存在しない出発駅を指定した場合はエラーが発生する`() {
         val input = UsecaseInputCreator.create(
             departureStationName = "miyagi"
         )
 
-        val priceCalculationUsecase = PriceCalculationUsecase(fareCalcService, surchargeCalcService)
+        val priceCalculationUsecase = PriceCalculationUsecase()
 
         val target: () -> Unit = {
             priceCalculationUsecase.calc(
@@ -49,7 +46,7 @@ class PriceCalculationUsecaseTest {
             arrivalStationName = "miyagi"
         )
 
-        val priceCalculationUsecase = PriceCalculationUsecase(fareCalcService, surchargeCalcService)
+        val priceCalculationUsecase = PriceCalculationUsecase()
 
         val target: () -> Unit = {
             priceCalculationUsecase.calc(
@@ -75,7 +72,7 @@ class PriceCalculationUsecaseTest {
             arrivalStationName = "tokyo"
         )
 
-        val priceCalculationUsecase = PriceCalculationUsecase(fareCalcService, surchargeCalcService)
+        val priceCalculationUsecase = PriceCalculationUsecase()
 
         val target: () -> Unit = {
             priceCalculationUsecase.calc(
@@ -101,22 +98,8 @@ class PriceCalculationUsecaseTest {
             tripType = TripType.ONE_WAY
         )
 
-        every { fareCalcService.calcPrice(allAny(), allAny(), allAny(), allAny()) }.returns(
-            FareCalcResult(
-                BeforeDiscountedFare.from(Fare(Price(1000)), input.passengers),
-                AfterDiscountedFare(Price(1000 * input.passengers.totalPassengers())),
-                tripType = input.tripType
-            )
-        )
-        every { surchargeCalcService.calcPrice(allAny(), allAny(), allAny(), allAny(), allAny(), allAny()) }.returns(
-            SurchargeCalcResult(
-                BeforeDiscountedSurcharge.from(Surcharge(Price(1000)), input.passengers),
-                AfterDiscountedSurcharge(Price(1000 * input.passengers.totalPassengers())),
-                input.tripType
-            )
-        )
 
-        val priceCalculationUsecase = PriceCalculationUsecase(fareCalcService, surchargeCalcService)
+        val priceCalculationUsecase = PriceCalculationUsecase()
 
         val result = priceCalculationUsecase.calc(
             input.departureStationName,
@@ -128,8 +111,8 @@ class PriceCalculationUsecaseTest {
             input.departureDate
         )
 
-        Assertions.assertEquals(1000, result.farePrice)
-        Assertions.assertEquals(1000, result.surchargePrice)
+        Assertions.assertEquals(8910, result.farePrice)
+        Assertions.assertEquals(5290, result.surchargePrice)
     }
 
     @Test
@@ -139,22 +122,8 @@ class PriceCalculationUsecaseTest {
             tripType = TripType.ROUND_TRIP
         )
 
-        every { fareCalcService.calcPrice(allAny(), allAny(), allAny(), allAny()) }.returns(
-            FareCalcResult(
-                BeforeDiscountedFare.from(Fare(Price(1000)), input.passengers),
-                AfterDiscountedFare(Price(1000 * input.passengers.totalPassengers())),
-                tripType = input.tripType
-            )
-        )
-        every { surchargeCalcService.calcPrice(allAny(), allAny(), allAny(), allAny(), allAny(), allAny()) }.returns(
-            SurchargeCalcResult(
-                BeforeDiscountedSurcharge.from(Surcharge(Price(1000)), input.passengers),
-                AfterDiscountedSurcharge(Price(1000 * input.passengers.totalPassengers())),
-                input.tripType
-            )
-        )
 
-        val priceCalculationUsecase = PriceCalculationUsecase(fareCalcService, surchargeCalcService)
+        val priceCalculationUsecase = PriceCalculationUsecase()
 
         val result = priceCalculationUsecase.calc(
             input.departureStationName,
@@ -166,7 +135,7 @@ class PriceCalculationUsecaseTest {
             input.departureDate
         )
 
-        Assertions.assertEquals(2000, result.farePrice)
-        Assertions.assertEquals(2000, result.surchargePrice)
+        Assertions.assertEquals(17820, result.farePrice)
+        Assertions.assertEquals(10580, result.surchargePrice)
     }
 }
