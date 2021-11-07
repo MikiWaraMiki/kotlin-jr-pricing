@@ -1,5 +1,7 @@
 package jrpricing.demo.first.domain.model.shared
 
+import jrpricing.demo.first.domain.model.exception.DomainException
+import jrpricing.demo.first.domain.model.exception.ErrorCode
 import jrpricing.demo.first.lib.domainsupport.valueobject.ValueObject
 import java.lang.IllegalArgumentException
 
@@ -11,11 +13,11 @@ class Price: ValueObject<Int> {
 
     constructor(aValue: Int): super(aValue) {
         if (aValue < 1) {
-            throw IllegalArgumentException("金額は1円以上である必要があります")
+            throw DomainException("金額は1円以上である必要があります", ErrorCode.MAYBE_PROGRAM_MISS)
         }
 
         if (aValue % 10 > 0) {
-            throw IllegalArgumentException("金額は10円単位である必要があります")
+            throw DomainException("金額は10円単位である必要があります", ErrorCode.MAYBE_PROGRAM_MISS)
         }
     }
 

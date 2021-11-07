@@ -1,5 +1,6 @@
 package jrpricing.demo.first.domain.model.shared
 
+import jrpricing.demo.first.domain.model.exception.DomainException
 import org.junit.jupiter.api.*
 
 class PriceTest {
@@ -9,29 +10,27 @@ class PriceTest {
     inner class ValidationTest() {
         @Test
         fun `金額が1円未満の場合はエラーになる`() {
-            val error = assertThrows<IllegalArgumentException> {
-                Price(0)
-            }
+            val target: () -> Unit = { Price(0) }
 
-            Assertions.assertEquals("金額は1円以上である必要があります", error.message)
+            val exception = assertThrows<DomainException>(target)
+
+            Assertions.assertEquals("金額は1円以上である必要があります", exception.message)
         }
 
         @Test
         fun `金額に5円が利用されている場合はエラーになる`() {
-            val error = assertThrows<IllegalArgumentException> {
-                Price(5)
-            }
+            val target: () -> Unit = { Price(5) }
 
-            Assertions.assertEquals("金額は10円単位である必要があります", error.message)
+            val exception = assertThrows<DomainException>(target)
+            Assertions.assertEquals("金額は10円単位である必要があります", exception.message)
         }
 
         @Test
         fun `金額に1円が利用されている場合はエラーになる`() {
-            val error = assertThrows<IllegalArgumentException> {
-                Price(1)
-            }
+            val target: () -> Unit = { Price(1) }
 
-            Assertions.assertEquals("金額は10円単位である必要があります", error.message)
+            val exception = assertThrows<DomainException>(target)
+            Assertions.assertEquals("金額は10円単位である必要があります", exception.message)
         }
     }
 
