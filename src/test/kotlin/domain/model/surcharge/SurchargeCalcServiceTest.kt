@@ -3,6 +3,7 @@ package domain.model.surcharge
 import domain.model.shared.Price
 import domain.model.route.Route
 import domain.model.station.Station
+import domain.model.surcharge.testdata.DepartureDateCreator
 import domain.model.ticket.DepartureDate
 import domain.model.train.SeatType
 import domain.model.train.TrainType
@@ -12,15 +13,9 @@ import java.time.LocalDate
 
 class SurchargeCalcServiceTest {
     private val surchargeCalcService = SurchargeCalcService()
-    private val REGULAR_DEPATURE_DATE =  DepartureDate(
-        LocalDate.of(LocalDate.now().year + 1, 5, 21)
-    )
-    private val PEAK_DEPARTURE_DATE = DepartureDate(
-        LocalDate.of(LocalDate.now().year + 1, 12,31)
-    )
-    private val OFF_PEAK_DEPARTURE_DATE = DepartureDate(
-        LocalDate.of(LocalDate.now().year + 1, 1,16)
-    )
+    private val REGULAR_DEPATURE_DATE =  DepartureDateCreator.REGULAR_DEPATURE_DATE
+    private val PEAK_DEPARTURE_DATE = DepartureDateCreator.PEAK_DEPARTURE_DATE
+    private val OFF_PEAK_DEPARTURE_DATE = DepartureDateCreator.OFF_PEAK_DEPARTURE_DATE
 
     @Test
     fun `大人・指定席・ひかり利用時の特急料金の結果が正しいこと`() {
