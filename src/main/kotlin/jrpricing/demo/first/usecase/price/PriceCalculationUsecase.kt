@@ -36,7 +36,7 @@ class PriceCalculationUsecase(
 
         val fareCalcResult = fareCalcService.calcPrice(route, passengers, departureDate, tripType)
 
-        val surchargeCalcResult = surchargeCalcService.calcPrice(route, trainType, seatType, departureDate, passengers)
+        val surchargeCalcResult = surchargeCalcService.calcPrice(route, trainType, seatType, departureDate, passengers, tripType)
 
         return PriceCalculationUsecaseDto(fareCalcResult.amount().value, surchargeCalcResult.amount().value)
     }
