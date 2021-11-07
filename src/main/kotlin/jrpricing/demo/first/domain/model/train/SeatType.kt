@@ -1,5 +1,8 @@
 package jrpricing.demo.first.domain.model.train
 
+import jrpricing.demo.first.domain.model.exception.DomainException
+import jrpricing.demo.first.domain.model.exception.ErrorCode
+
 /**
  * 席区分
  */
@@ -14,7 +17,7 @@ enum class SeatType(private val label: String) {
     companion object {
         fun fromLabel(label: String): SeatType {
             return values().firstOrNull { it.label == label } ?:
-                throw IllegalArgumentException("指定席もしくは自由席を選択してください")
+                throw DomainException("指定席もしくは自由席を選択してください", ErrorCode.INVALID_INPUT)
         }
     }
 }

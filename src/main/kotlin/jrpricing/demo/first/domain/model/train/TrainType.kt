@@ -1,5 +1,7 @@
 package jrpricing.demo.first.domain.model.train
 
+import jrpricing.demo.first.domain.model.exception.DomainException
+import jrpricing.demo.first.domain.model.exception.ErrorCode
 import java.lang.IllegalArgumentException
 
 /**
@@ -16,7 +18,7 @@ enum class TrainType(private val label: String) {
     companion object {
         fun fromLabel(label: String): TrainType {
             return values().firstOrNull { it.label == label } ?:
-                throw IllegalArgumentException("のぞみもしくはひかりを選択してください")
+                throw DomainException("のぞみもしくはひかりを選択してください", ErrorCode.INVALID_INPUT)
         }
     }
 }
