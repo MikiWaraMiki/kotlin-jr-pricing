@@ -1,6 +1,7 @@
 package jrpricing.demo.first.usecase.price
 
 import jrpricing.demo.first.domain.model.fare.FareCalcService
+import jrpricing.demo.first.domain.model.route.JrRouteTable
 import jrpricing.demo.first.domain.model.route.Route
 import jrpricing.demo.first.domain.model.shared.Passengers
 import jrpricing.demo.first.domain.model.station.Station
@@ -26,14 +27,12 @@ class PriceCalculationUsecase(
         trainType: TrainType,
         seatType: SeatType,
         passengers: Passengers,
-        departureLocalDate: LocalDate
+        departureDate: DepartureDate
     ): PriceCalculationUsecaseDto {
 
         val departureStation = Station.fromLabel(departureStationName)
         val arrivalStation = Station.fromLabel(arrivalStationName)
-        val route = Route(departureStation, arrivalStation)
-
-        val departureDate = DepartureDate(departureLocalDate)
+        val route = JrRouteTable.of(departureStation, arrivalStation)
 
         val fareCalcResult = fareCalcService.calcPrice(route, passengers, departureDate, tripType)
 

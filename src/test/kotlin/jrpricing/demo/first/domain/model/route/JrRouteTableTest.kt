@@ -29,7 +29,6 @@ class JrRouteTableTest {
 
             val exception = assertThrows<DomainException>(target)
 
-
             Assertions.assertEquals("経路表に登録されていない到着駅です", exception.message)
         }
 
