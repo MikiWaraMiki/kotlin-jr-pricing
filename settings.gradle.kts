@@ -1,3 +1,1 @@
-
-rootProject.name = "jr-pricing"
-
+rootProject.name = "demo"
