@@ -1,5 +1,7 @@
 package jrpricing.demo.first.domain.model.season
 
+import jrpricing.demo.first.domain.model.exception.DomainException
+import jrpricing.demo.first.domain.model.exception.ErrorCode
 import jrpricing.demo.first.lib.domainsupport.valueobject.MonthDayRange
 import java.time.LocalDate
 import java.time.MonthDay
@@ -31,7 +33,7 @@ enum class SeasonTypeCategory(
             val monthDay = MonthDay.from(date)
             val category = values().firstOrNull {
                 it.contains(monthDay)
-            } ?: throw IllegalStateException("季節区分カテゴリに存在しない日付です")
+            } ?: throw DomainException("季節区分カテゴリに存在しない日付です", ErrorCode.INVALID_INPUT)
 
             return category
         }
