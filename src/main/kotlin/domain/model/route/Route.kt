@@ -22,6 +22,10 @@ class Route(
         arrivalStation = anArrivalStation
     }
 
+    fun distance(): Int {
+        return RouteDistanceTable.distance(this)
+    }
+
     /**
      * 片道の移動距離が601km以上か判定する
      */

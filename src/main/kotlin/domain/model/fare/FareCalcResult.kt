@@ -2,15 +2,26 @@ package domain.model.fare
 
 import domain.model.shared.Passengers
 import domain.model.shared.Price
+import domain.model.ticket.TripType
 
 class FareCalcResult (
-    private val fare: Fare,
-    private val passengers: Passengers
+    private val beforeDiscountedTotalPrice: BeforeDiscountedFare,
+    private val afterDiscountedTotalPrice: AfterDiscountedFare,
+    private val tripType: TripType
 ){
-    fun total(): Price {
-        val adultTotal = fare.price(false).value * passengers.adults
-        val childTotal = fare.price(true).value * passengers.childs
+    fun isDiscounted(): Boolean {
+        return beforeDiscountedTotalPrice.amount.value > afterDiscountedTotalPrice.amount.value
+    }
 
-        return Price(adultTotal + childTotal)
+    fun amount(): Price {
+        val applyPrice = if(isDiscounted()) {
+            afterDiscountedTotalPrice.amount
+        } else {
+            beforeDiscountedTotalPrice.amount
+        }
+
+        if (tripType.isOneway()) return applyPrice
+
+        return Price(applyPrice.value * 2)
     }
 }
