@@ -17,7 +17,7 @@ enum class SeasonTypeCategory(
     OFF_PEAK("閑散期", "01-16", "01-31"),
     REGULAR("平常", "01-01", "12-31");
 
-    fun contains(monthDay: MonthDay): Boolean {
+    private fun contains(monthDay: MonthDay): Boolean {
         val range = MonthDayRange(
             MonthDay.parse("--${start}"),
             MonthDay.parse("--${end}")
