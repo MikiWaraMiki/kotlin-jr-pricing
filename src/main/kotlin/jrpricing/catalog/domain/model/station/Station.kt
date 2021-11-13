@@ -8,6 +8,10 @@ class Station private constructor(
     val stationName: StationName
 ) {
 
+    fun name(): String {
+        return stationName.value
+    }
+
     companion object {
         fun reConstructor(stationId: StationId, stationName: StationName): Station {
             return Station(
