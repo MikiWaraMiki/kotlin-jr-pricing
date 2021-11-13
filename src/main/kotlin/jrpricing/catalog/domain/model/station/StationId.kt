@@ -1,6 +1,8 @@
 package jrpricing.catalog.domain.model.station
 
 import com.github.guepardoapps.kulid.ULID
+import jrpricing.demo.first.domain.model.exception.DomainException
+import jrpricing.demo.first.domain.model.exception.ErrorCode
 
 /**
  * 駅ID
@@ -8,6 +10,12 @@ import com.github.guepardoapps.kulid.ULID
 class StationId private constructor(
     val value: String
 ) {
+
+    init {
+        if (value == "") {
+            throw DomainException("駅IDが入力されていません", ErrorCode.INVALID_INPUT)
+        }
+    }
 
     override fun hashCode(): Int {
         return value.hashCode() * 31
