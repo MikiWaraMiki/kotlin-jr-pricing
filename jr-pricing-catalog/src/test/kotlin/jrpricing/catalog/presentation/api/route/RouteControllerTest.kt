@@ -37,7 +37,7 @@ internal class RouteControllerTest {
             )
 
             every { findRouteFromDepartureAndArrivalUsecase.execute(departureStation.stationId, arrivalStation.stationId) }.returns(
-                FindRouteFromDepartureAndArrivalUsecaseResultDto(route.routeId, departureStation, arrivalStation)
+                FindRouteFromDepartureAndArrivalUsecaseResultDto(route.routeId, route.distance, departureStation, arrivalStation)
             )
 
             val expectedResponse = RouteDto(

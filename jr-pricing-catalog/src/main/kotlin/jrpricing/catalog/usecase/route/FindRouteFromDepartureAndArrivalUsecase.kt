@@ -1,5 +1,6 @@
 package jrpricing.catalog.usecase.route
 
+import jrpricing.catalog.domain.model.route.RouteDistance
 import jrpricing.catalog.domain.model.route.RouteId
 import jrpricing.catalog.domain.model.route.RouteRepository
 import jrpricing.catalog.domain.model.station.Station
@@ -12,6 +13,7 @@ import java.lang.RuntimeException
 
 data class FindRouteFromDepartureAndArrivalUsecaseResultDto(
     val routeId: RouteId,
+    val distance: RouteDistance,
     val departureStation: Station,
     val arrivalStation: Station
 )
@@ -38,6 +40,7 @@ class FindRouteFromDepartureAndArrivalUsecase(
 
         return FindRouteFromDepartureAndArrivalUsecaseResultDto(
             route.routeId,
+            route.distance,
             departureStation,
             arrivalStation
         )

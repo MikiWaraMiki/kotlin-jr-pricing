@@ -42,6 +42,7 @@ class FindRouteFromDepartureAndArrivalUsecaseTest {
 
         val expectedDto = FindRouteFromDepartureAndArrivalUsecaseResultDto(
             route.routeId,
+            route.distance,
             departureStation,
             arrivalStation
         )
