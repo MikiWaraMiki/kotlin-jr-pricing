@@ -6,6 +6,7 @@ import jrpricing.catalog.domain.model.station.StationId
 import jrpricing.catalog.domain.repository.station.StationRepository
 import catalog.testdata.station.TestStationFactory
 import jrpricing.catalog.usecase.exception.AssertionFailException
+import jrpricing.catalog.usecase.station.FetchByStationIdUsecase
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

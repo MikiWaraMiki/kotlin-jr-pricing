@@ -1,8 +1,8 @@
 package jrpricing.catalog.domain.model.station
 
 import com.github.guepardoapps.kulid.ULID
-import jrpricing.demo.first.domain.model.exception.DomainException
-import jrpricing.demo.first.domain.model.exception.ErrorCode
+import jrpricing.catalog.domain.exception.DomainException
+import jrpricing.catalog.domain.exception.ErrorCode
 
 /**
  * 駅ID

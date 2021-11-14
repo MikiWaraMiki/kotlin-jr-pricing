@@ -1,5 +1,8 @@
 package catalog.domain.model.station
 
+import jrpricing.catalog.domain.model.station.Station
+import jrpricing.catalog.domain.model.station.StationId
+import jrpricing.catalog.domain.model.station.StationName
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
