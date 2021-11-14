@@ -42,6 +42,7 @@ internal class RouteControllerTest {
 
             val expectedResponse = RouteDto(
                 route.routeId.value,
+                route.distance.halfTripDistance(),
                 StationDto(departureStation.stationId.value, departureStation.name()),
                 StationDto(arrivalStation.stationId.value, arrivalStation.name())
             )

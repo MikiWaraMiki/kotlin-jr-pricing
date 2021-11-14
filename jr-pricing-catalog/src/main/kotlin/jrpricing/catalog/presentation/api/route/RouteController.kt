@@ -26,6 +26,7 @@ class RouteController(
 
         return RouteDto(
             id = result.routeId.value,
+            distance = result.distance.halfTripDistance(),
             departureStation = StationDto(
                 id = result.departureStation.stationId.value,
                 name = result.departureStation.name()
