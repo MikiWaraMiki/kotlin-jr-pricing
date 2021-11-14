@@ -1,6 +1,7 @@
 package jrpricing.catalog.infra.repository
 
 import jrpricing.catalog.domain.model.route.Route
+import jrpricing.catalog.domain.model.route.RouteDistance
 import jrpricing.catalog.domain.model.route.RouteId
 import jrpricing.catalog.domain.model.route.RouteRepository
 import jrpricing.catalog.domain.model.station.Station
@@ -20,6 +21,7 @@ class RouteJooqRepository(
         record.id = route.routeId.value
         record.departureStationId = route.departureStationId.value
         record.arrivalStationId = route.arrivalStationId.value
+        record.distance = route.distance.halfTripDistance().toLong()
 
         record.insert()
     }
@@ -43,7 +45,8 @@ class RouteJooqRepository(
         return Route(
             routeId = RouteId.reConstructor(routeRecord.id),
             departureStationId = StationId.reConstructor(routeRecord.departureStationId),
-            arrivalStationId = StationId.reConstructor(routeRecord.arrivalStationId)
+            arrivalStationId = StationId.reConstructor(routeRecord.arrivalStationId),
+            distance = RouteDistance(routeRecord.distance.toInt())
         )
     }
 }

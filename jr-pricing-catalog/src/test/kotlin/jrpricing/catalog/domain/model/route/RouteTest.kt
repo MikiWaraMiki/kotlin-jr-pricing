@@ -11,9 +11,10 @@ class RouteTest {
     fun `出発駅と到着駅が同じ場合はエラーになる`() {
         val routeId = RouteId.create()
         val stationId = StationId.create()
+        val distance = RouteDistance(1)
 
         val target: () -> Unit = {
-            Route(routeId, stationId, stationId)
+            Route(routeId, stationId, stationId, distance)
         }
 
         val exception = assertThrows<DomainException>(target)
@@ -26,8 +27,10 @@ class RouteTest {
         val routeId = RouteId.create()
         val departureStationId = StationId.create()
         val arrivalStationId = StationId.create()
+        val distance = RouteDistance(1)
 
-        val route = Route(routeId, departureStationId, arrivalStationId)
+
+        val route = Route(routeId, departureStationId, arrivalStationId, distance)
 
         Assertions.assertEquals(routeId, route.routeId)
         Assertions.assertEquals(departureStationId, route.departureStationId)

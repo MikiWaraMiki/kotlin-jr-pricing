@@ -10,8 +10,9 @@ import jrpricing.catalog.domain.model.station.StationId
 class Route(
     val routeId: RouteId,
     val departureStationId: StationId,
-    val arrivalStationId: StationId
-    ){
+    val arrivalStationId: StationId,
+    val distance: RouteDistance)
+{
     init {
         if (arrivalStationId.value == departureStationId.value) {
             throw DomainException("出発駅と到着駅を同じにすることはできません", ErrorCode.INVALID_INPUT)
