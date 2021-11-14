@@ -5,6 +5,6 @@ package jrpricing.catalog.usecase.exception
  */
 class AssertionFailException(
     message: String,
-    errorCode: ErrorCode
+    val errorCode: ErrorCode
 ): RuntimeException(message) {
 }
