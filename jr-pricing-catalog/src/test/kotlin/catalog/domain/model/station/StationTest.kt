@@ -1,4 +1,4 @@
-package jrpricing.catalog.domain.model.station
+package catalog.domain.model.station
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
