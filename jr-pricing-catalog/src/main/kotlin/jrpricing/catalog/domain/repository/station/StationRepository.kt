@@ -8,4 +8,5 @@ import jrpricing.catalog.domain.model.station.StationId
  */
 interface StationRepository {
     fun findById(stationId: StationId): Station?
+    fun insert(station: Station)
 }

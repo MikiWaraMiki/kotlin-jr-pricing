@@ -1,7 +1,6 @@
-package catalog.domain.model.station
+package jrpricing.catalog.domain.model.station
 
 import jrpricing.catalog.domain.exception.DomainException
-import jrpricing.catalog.domain.model.station.StationName
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
