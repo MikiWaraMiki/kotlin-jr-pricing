@@ -1,7 +1,5 @@
 package jrpricing.catalog.infra.repository
 
-import jrpricing.catalog.domain.model.route.RouteRepository
-import jrpricing.catalog.domain.repository.station.StationRepository
 import jrpricing.catalog.testdata.route.RouteTestDataCreator
 import jrpricing.catalog.testdata.station.StationTestDataCreator
 import org.junit.jupiter.api.Assertions
