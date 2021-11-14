@@ -28,7 +28,7 @@ internal class RouteJooqRepositoryTest(
     @DisplayName("findByDepartureAndArrivalStationのテスト")
     inner class `FindByDepartureAndArrivalStationのテスト`() {
         @Test
-        fun `出発駅と到着駅が存在する経路の場合はRouteオブジェクトを返却すること`() {
+        fun `経路に登録されている出発駅と到着駅の組み合わせの場合は、Routeオブジェクトを返却すること`() {
             val departureStation = stationTestDataCreator.create(stationName = "tokyo")
             val arrivalStation = stationTestDataCreator.create(stationName = "shin_osaka")
 
@@ -42,6 +42,19 @@ internal class RouteJooqRepositoryTest(
             Assertions.assertEquals(route.routeId, foundRoute.routeId)
             Assertions.assertEquals(departureStation.stationId, foundRoute.departureStationId)
             Assertions.assertEquals(arrivalStation.stationId, foundRoute.arrivalStationId)
+        }
+
+        @Test
+        fun `経路に登録されていない出発駅と到着駅の組み合わせの場合は、nullを返すこと`() {
+            val departureStation = stationTestDataCreator.create(stationName = "tokyo")
+            val arrivalStation = stationTestDataCreator.create(stationName = "shin_osaka")
+
+            val maybeNull = routeRepository.findByDepartureAndArrivalStation(
+                departureStation.stationId,
+                arrivalStation.stationId
+            )
+
+            Assertions.assertNull(maybeNull)
         }
     }
 }
