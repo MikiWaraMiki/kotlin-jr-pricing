@@ -21,6 +21,6 @@ class AmountTest {
     fun `金額が1円以上の場合はエラーが発生しないこと`() {
         val amount = Amount(1)
 
-        Assertions.assertEquals(1, amount.value)
+        Assertions.assertEquals(Amount(1), amount)
     }
 }
