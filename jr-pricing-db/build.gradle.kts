@@ -32,7 +32,7 @@ jooqGenerator {
 
             generator {
                 target {
-                    packageName = "jrpricing.da"
+                    packageName = "jrpricing.db.jooq.gen"
                     directory = "${project.buildDir}/generated/jooq/primary"
                 }
 
