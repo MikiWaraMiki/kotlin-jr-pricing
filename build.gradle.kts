@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.5.6"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
+	id("org.flywaydb.flyway") version "8.0.4"
 	kotlin("jvm") version "1.5.31"
 	kotlin("plugin.spring") version "1.5.31"
 }
@@ -38,4 +39,12 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+flyway {
+	url = System.getenv("DB_URL") ?: "jdbc:postgresql://localhost:5432/jr-pricing-local"
+	user = System.getenv("DB_USER") ?: "root"
+	password = System.getenv("DB_PASSWORD") ?: "root"
+	baselineOnMigrate = true
+	locations = arrayOf("filesystem:src/main/resources/db/migration")
 }
