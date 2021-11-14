@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
-class StationNameTest {
+internal class StationNameTest {
 
     @Test
     fun `駅名が入力されていない場合はエラーが発生すること`() {
