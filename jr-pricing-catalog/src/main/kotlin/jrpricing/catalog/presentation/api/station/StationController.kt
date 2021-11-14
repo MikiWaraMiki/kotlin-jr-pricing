@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 class StationController(
     private val fetchByStationIdUsecase: FetchByStationIdUsecase
 ) {
-    @GetMapping("/")
+    @GetMapping("")
     fun findStationById(
         @RequestParam(name = "stationId") stationId: String
     ): FindStationByIdResponse {
