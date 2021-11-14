@@ -25,7 +25,7 @@ class RouteId private constructor(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as StationId
+        other as RouteId
 
         if (value != other.value) return false
 
