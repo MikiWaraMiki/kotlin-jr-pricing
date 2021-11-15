@@ -3,7 +3,7 @@ package jrpricing.catalog.usecase.station
 import io.mockk.every
 import io.mockk.mockk
 import jrpricing.catalog.domain.model.station.StationId
-import jrpricing.catalog.domain.repository.station.StationRepository
+import jrpricing.catalog.domain.model.station.StationRepository
 import jrpricing.catalog.testdata.station.TestStationFactory
 import jrpricing.catalog.usecase.exception.AssertionFailException
 import org.junit.jupiter.api.Assertions

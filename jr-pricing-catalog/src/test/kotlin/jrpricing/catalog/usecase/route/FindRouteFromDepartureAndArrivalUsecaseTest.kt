@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import jrpricing.catalog.domain.model.route.RouteRepository
 import jrpricing.catalog.domain.model.station.StationName
-import jrpricing.catalog.domain.repository.station.StationRepository
+import jrpricing.catalog.domain.model.station.StationRepository
 import jrpricing.catalog.testdata.route.TestRouteFactory
 import jrpricing.catalog.testdata.station.TestStationFactory
 import jrpricing.catalog.usecase.exception.AssertionFailException

@@ -1,4 +1,4 @@
-package jrpricing.catalog.domain.repository.station
+package jrpricing.catalog.domain.model.station
 
 import jrpricing.catalog.domain.model.station.Station
 import jrpricing.catalog.domain.model.station.StationId

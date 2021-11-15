@@ -5,7 +5,7 @@ import jrpricing.db.jooq.gen.tables.records.TblStationsRecord
 import jrpricing.catalog.domain.model.station.Station
 import jrpricing.catalog.domain.model.station.StationId
 import jrpricing.catalog.domain.model.station.StationName
-import jrpricing.catalog.domain.repository.station.StationRepository
+import jrpricing.catalog.domain.model.station.StationRepository
 import jrpricing.db.jooq.gen.tables.TblStations
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository

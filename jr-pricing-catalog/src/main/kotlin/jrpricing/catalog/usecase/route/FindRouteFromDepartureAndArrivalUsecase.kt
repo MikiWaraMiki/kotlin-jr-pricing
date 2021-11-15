@@ -5,7 +5,7 @@ import jrpricing.catalog.domain.model.route.RouteId
 import jrpricing.catalog.domain.model.route.RouteRepository
 import jrpricing.catalog.domain.model.station.Station
 import jrpricing.catalog.domain.model.station.StationId
-import jrpricing.catalog.domain.repository.station.StationRepository
+import jrpricing.catalog.domain.model.station.StationRepository
 import jrpricing.catalog.usecase.exception.AssertionFailException
 import jrpricing.catalog.usecase.exception.ErrorCode
 import org.springframework.stereotype.Service
