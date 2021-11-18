@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service
  * 指定された駅間の運賃料金を返すユースケースクラス
  */
 @Service
-class FindBasicFareByRouteIdUsecase(
+class FindBasicFareUsecase(
     private val routeRepository: RouteRepository,
     private val basicFareRepository: BasicFareRepository
 ) {

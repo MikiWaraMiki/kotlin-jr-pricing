@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class FindBasicFareByRouteIdUsecaseTest {
+class FindBasicFareUsecaseTest {
     private val routeRepository: RouteRepository = mockk()
     private val basicFareRepository: BasicFareRepository = mockk()
 
@@ -23,7 +23,7 @@ class FindBasicFareByRouteIdUsecaseTest {
 
         every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(null)
 
-        val usecase = FindBasicFareByRouteIdUsecase(routeRepository, basicFareRepository)
+        val usecase = FindBasicFareUsecase(routeRepository, basicFareRepository)
 
         val target: () -> Unit = {
             usecase.execute(departureStationId, arrivalStationId)
@@ -43,7 +43,7 @@ class FindBasicFareByRouteIdUsecaseTest {
         every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(route)
         every { basicFareRepository.findByRouteId(route.routeId) }.returns(null)
 
-        val usecase = FindBasicFareByRouteIdUsecase(routeRepository, basicFareRepository)
+        val usecase = FindBasicFareUsecase(routeRepository, basicFareRepository)
 
         val target: () -> Unit = {
             usecase.execute(departureStationId, arrivalStationId)
@@ -63,7 +63,7 @@ class FindBasicFareByRouteIdUsecaseTest {
         every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(route)
         every { basicFareRepository.findByRouteId(route.routeId) }.returns(basicFare)
 
-        val usecase = FindBasicFareByRouteIdUsecase(routeRepository, basicFareRepository)
+        val usecase = FindBasicFareUsecase(routeRepository, basicFareRepository)
 
         val result = usecase.execute(departureStationId, arrivalStationId)
 
