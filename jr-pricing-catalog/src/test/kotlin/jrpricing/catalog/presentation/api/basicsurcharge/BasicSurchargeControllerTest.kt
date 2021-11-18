@@ -1,59 +1,60 @@
-package jrpricing.catalog.presentation.api.basicfare
+package jrpricing.catalog.presentation.api.basicsurcharge
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.mockk.every
 import io.mockk.mockk
 import jrpricing.catalog.domain.model.shared.Amount
-import jrpricing.catalog.presentation.api.dto.RouteDto
 import jrpricing.catalog.presentation.api.shared.ExceptionHandler
-import jrpricing.catalog.testdata.fare.TestBasicFareFactory
 import jrpricing.catalog.testdata.route.TestRouteFactory
 import jrpricing.catalog.testdata.station.TestStationFactory
-import jrpricing.catalog.usecase.basicfare.FindBasicFareUsecase
+import jrpricing.catalog.testdata.surcharge.TestBasicSurchargeFactory
+import jrpricing.catalog.usecase.basicsurcharge.FindBasicSurchargeUsecase
 import jrpricing.catalog.usecase.exception.AssertionFailException
 import jrpricing.catalog.usecase.exception.ErrorCode
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.springframework.test.web.servlet.MockMvcBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import java.nio.charset.StandardCharsets
 
-internal class BasicFareControllerTest {
+class BasicSurchargeControllerTest {
+
     @Nested
     inner class SearchTest() {
-        private val findBasicFareUsecase: FindBasicFareUsecase = mockk()
-        private val basicFareController = BasicFareController(findBasicFareUsecase)
+        private val findBasicSurchargeUsecase: FindBasicSurchargeUsecase = mockk()
+        private val basicSurchargeController = BasicSurchargeController(findBasicSurchargeUsecase)
 
         @Test
-        fun `出発駅と到着駅の経路と運賃が存在する場合は200レスポンスを返し、レスポンスのスキーマが正しいこと`() {
+        fun `出発駅と到着駅の経路と特急料金が存在する場合は200レスポンスを返し、レスポンスのスキーマが正しいこと`() {
             val departureStation = TestStationFactory.create()
             val arrivalStation = TestStationFactory.create()
             val route = TestRouteFactory.create(
                 departureStationId = departureStation.stationId,
                 arrivalStationId = arrivalStation.stationId
             )
-            val basicFare = TestBasicFareFactory.create(
+            val basicSurcharge = TestBasicSurchargeFactory.create(
                 routeId = route.routeId,
                 amount = Amount(10000)
             )
 
-            every { findBasicFareUsecase.execute(departureStation.stationId, arrivalStation.stationId) }.returns(basicFare)
+            every { findBasicSurchargeUsecase.execute(departureStation.stationId, arrivalStation.stationId) }.returns(basicSurcharge)
 
-            val expectedResponse = SearchFareResponse(
+            val expectedResponse = SearchSurchargeResponse(
                 routeId = route.routeId.value,
-                amount = basicFare.amount.value
+                amount = basicSurcharge.amount.value
             )
             val expected = ObjectMapper()
                 .registerKotlinModule()
                 .writeValueAsString(expectedResponse)
 
-            val mockMvc = MockMvcBuilders.standaloneSetup(basicFareController).build()
+            val mockMvc = MockMvcBuilders.standaloneSetup(basicSurchargeController).build()
 
             val resultResponse = mockMvc.perform(
-                get("/api/v1/catalog/fare/search")
+                get("/api/v1/catalog/surcharge/search")
                     .param("departureStationId", departureStation.stationId.value)
                     .param("arrivalStationId", arrivalStation.stationId.value)
             )
@@ -65,17 +66,16 @@ internal class BasicFareControllerTest {
             Assertions.assertEquals(expected, result)
         }
 
-
         @Test
         fun `経路が存在しない場合は404エラーを返すこと`() {
             val departureStation = TestStationFactory.create()
             val arrivalStation = TestStationFactory.create()
 
-            every { findBasicFareUsecase.execute(departureStation.stationId, arrivalStation.stationId) }.throws(
+            every { findBasicSurchargeUsecase.execute(departureStation.stationId, arrivalStation.stationId) }.throws(
                 AssertionFailException("指定した駅間の経路は存在しません", ErrorCode.NOTFOUND_ASSERTION)
             )
 
-            val mockMvc = MockMvcBuilders.standaloneSetup(basicFareController)
+            val mockMvc = MockMvcBuilders.standaloneSetup(basicSurchargeController)
                 .setControllerAdvice(ExceptionHandler())
                 .build()
 
@@ -91,11 +91,11 @@ internal class BasicFareControllerTest {
             val departureStation = TestStationFactory.create()
             val arrivalStation = TestStationFactory.create()
 
-            every { findBasicFareUsecase.execute(departureStation.stationId, arrivalStation.stationId) }.throws(
+            every { findBasicSurchargeUsecase.execute(departureStation.stationId, arrivalStation.stationId) }.throws(
                 AssertionFailException("指定した経路の運賃は存在しません", ErrorCode.NOTFOUND_ASSERTION)
             )
 
-            val mockMvc = MockMvcBuilders.standaloneSetup(basicFareController)
+            val mockMvc = MockMvcBuilders.standaloneSetup(basicSurchargeController)
                 .setControllerAdvice(ExceptionHandler())
                 .build()
 
@@ -105,6 +105,5 @@ internal class BasicFareControllerTest {
                     .param("arrivalStationId", arrivalStation.stationId.value)
             ).andExpect(status().isNotFound)
         }
-
     }
 }

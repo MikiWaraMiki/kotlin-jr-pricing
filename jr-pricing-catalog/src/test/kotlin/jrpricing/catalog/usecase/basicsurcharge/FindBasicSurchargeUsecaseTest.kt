@@ -2,7 +2,6 @@ package jrpricing.catalog.usecase.basicsurcharge
 
 import io.mockk.every
 import io.mockk.mockk
-import jrpricing.catalog.domain.model.route.Route
 import jrpricing.catalog.domain.model.route.RouteRepository
 import jrpricing.catalog.domain.model.shared.Amount
 import jrpricing.catalog.domain.model.station.StationId
@@ -14,7 +13,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-internal class FindBasicSurchargeByRouteIdUsecaseTest {
+internal class FindBasicSurchargeUsecaseTest {
     private val routeRepository: RouteRepository = mockk()
     private val basicSurchargeRepository: BasicSurchargeRepository = mockk()
 
@@ -25,7 +24,7 @@ internal class FindBasicSurchargeByRouteIdUsecaseTest {
 
         every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(null)
 
-        val usecase = FindBasicSurchargeByRouteIdUsecase(routeRepository, basicSurchargeRepository)
+        val usecase = FindBasicSurchargeUsecase(routeRepository, basicSurchargeRepository)
 
         val target: () -> Unit = {
             usecase.execute(departureStationId, arrivalStationId)
@@ -44,7 +43,7 @@ internal class FindBasicSurchargeByRouteIdUsecaseTest {
 
         every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(route)
         every{ basicSurchargeRepository.findByRouteId(route.routeId) }.returns(null)
-        val usecase = FindBasicSurchargeByRouteIdUsecase(routeRepository, basicSurchargeRepository)
+        val usecase = FindBasicSurchargeUsecase(routeRepository, basicSurchargeRepository)
 
         val target: () -> Unit = {
             usecase.execute(departureStationId, arrivalStationId)
@@ -64,7 +63,7 @@ internal class FindBasicSurchargeByRouteIdUsecaseTest {
 
         every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(route)
         every{ basicSurchargeRepository.findByRouteId(route.routeId) }.returns(basicSurcharge)
-        val usecase = FindBasicSurchargeByRouteIdUsecase(routeRepository, basicSurchargeRepository)
+        val usecase = FindBasicSurchargeUsecase(routeRepository, basicSurchargeRepository)
 
         val result = usecase.execute(departureStationId, arrivalStationId)
 

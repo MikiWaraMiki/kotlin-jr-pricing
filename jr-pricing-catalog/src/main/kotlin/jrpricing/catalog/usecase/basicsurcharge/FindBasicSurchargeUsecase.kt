@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
  * 指定された駅間の特急料金を返すユースケース
  */
 @Service
-class FindBasicSurchargeByRouteIdUsecase(
+class FindBasicSurchargeUsecase(
     private val routeRepository: RouteRepository,
     private val basicSurchargeRepository: BasicSurchargeRepository
 ) {
