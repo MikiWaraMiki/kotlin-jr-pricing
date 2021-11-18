@@ -11,7 +11,7 @@ import jrpricing.catalog.usecase.exception.ErrorCode
 import org.springframework.stereotype.Service
 
 /**
- * 指定された駅間の運賃基本料金を返すユースケースクラス
+ * 指定された駅間の運賃料金を返すユースケースクラス
  */
 @Service
 class FindBasicFareByRouteIdUsecase(
