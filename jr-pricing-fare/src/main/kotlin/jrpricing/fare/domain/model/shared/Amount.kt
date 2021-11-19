@@ -17,5 +17,13 @@ class Amount private constructor(
         fun of(value: Int): Amount {
             return Amount(value)
         }
+
+        fun withAdjust(value: Int): Amount {
+            val surplus = value % 10
+
+            if (surplus == 0) return of(value)
+
+            return of(value - surplus)
+        }
     }
 }
