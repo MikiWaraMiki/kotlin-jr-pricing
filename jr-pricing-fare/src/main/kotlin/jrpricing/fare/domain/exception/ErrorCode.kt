@@ -1,4 +1,4 @@
-package jrpricing.fare.domain.model.exception
+package jrpricing.fare.domain.exception
 
 enum class ErrorCode(val value: Int) {
     INVALID_INPUT(400),

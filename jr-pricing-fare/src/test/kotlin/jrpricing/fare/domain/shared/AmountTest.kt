@@ -1,6 +1,6 @@
-package jrpricing.fare.domain.model.shared
+package jrpricing.fare.domain.shared
 
-import jrpricing.fare.domain.model.exception.DomainException
+import jrpricing.fare.domain.exception.DomainException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

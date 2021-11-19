@@ -1,4 +1,4 @@
-package jrpricing.fare.domain.model.exception
+package jrpricing.fare.domain.exception
 
 /**
  * ドメイン層の例外

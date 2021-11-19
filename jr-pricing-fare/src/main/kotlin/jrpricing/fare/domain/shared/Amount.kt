@@ -1,7 +1,7 @@
-package jrpricing.fare.domain.model.shared
+package jrpricing.fare.domain.shared
 
-import jrpricing.fare.domain.model.exception.DomainException
-import jrpricing.fare.domain.model.exception.ErrorCode
+import jrpricing.fare.domain.exception.DomainException
+import jrpricing.fare.domain.exception.ErrorCode
 
 /**
  * 金額クラス
