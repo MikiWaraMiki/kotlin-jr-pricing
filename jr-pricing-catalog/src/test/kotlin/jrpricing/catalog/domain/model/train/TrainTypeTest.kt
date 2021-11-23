@@ -14,9 +14,9 @@ class TrainTypeTest {
 
     @Test
     fun `ひかりのオブジェクトをIDから取得できること`() {
-        val hikarTrainType = TrainType.fromId(TrainType.HIKARI.id)
+        val hikariTrainType = TrainType.fromId(TrainType.HIKARI.id)
 
-        Assertions.assertEquals(TrainType.HIKARI, hikarTrainType)
-        Assertions.assertFalse(hikarTrainType.isNozomi())
+        Assertions.assertEquals(TrainType.HIKARI, hikariTrainType)
+        Assertions.assertFalse(hikariTrainType.isNozomi())
     }
 }
