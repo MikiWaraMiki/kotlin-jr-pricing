@@ -28,6 +28,10 @@ class ExternalApiClient(
             String::class.java
         )
 
+        if (response.statusCode == HttpStatus.NOT_FOUND) {
+            return null
+        }
+
         if (response.statusCode != HttpStatus.OK) {
             throw CatalogApiClientException(response.body.toString(), response.statusCode)
         }

@@ -5,5 +5,5 @@ import jrpricing.fare.domain.shared.Amount
 import jrpricing.fare.domain.shared.TripRoute
 
 interface CatalogBasicFareRepository {
-    fun findBasicFare(tripRoute: TripRoute): BasicFare
+    fun findBasicFare(tripRoute: TripRoute): BasicFare?
 }

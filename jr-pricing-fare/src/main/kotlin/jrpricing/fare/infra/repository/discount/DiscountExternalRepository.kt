@@ -21,14 +21,14 @@ class DiscountExternalRepository(
         basicFare: BasicFare,
         route: TripRoute,
         tripType: TripType,
-    ): Amount {
+    ): Amount? {
         val uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(discountBaseUrl)
             .queryParam("arrivalStationId", route.arrivalStationId)
             .queryParam("departureStationId", route.departureStationId)
             .queryParam("fare", basicFare.amount.value)
             .queryParam("tripTypeName", tripType.typeName)
 
-        val result = externalApiClient.callGet(uriComponentsBuilder)
+        val result = externalApiClient.callGet(uriComponentsBuilder) ?: return null
 
         val response = jacksonObjectMapper().readValue(result, DiscountCalcResponse::class.java)
 

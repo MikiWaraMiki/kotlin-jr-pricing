@@ -19,12 +19,14 @@ class CatalogBasicFareExternalRepository(
     @Value("\${jr-fare-app-conf.catalogBaseUrl") private val catalogUrl: String
 ): CatalogBasicFareRepository {
 
-    override fun findBasicFare(tripRoute: TripRoute): BasicFare {
+    override fun findBasicFare(tripRoute: TripRoute): BasicFare? {
         val uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(catalogUrl)
             .queryParam("arrivalStationId", tripRoute.arrivalStationId)
             .queryParam("departureStationId", tripRoute.departureStationId)
 
         val result = externalApiClient.callGet(uriComponentsBuilder)
+
+        if (result == null) return null
 
         val response = jacksonObjectMapper().readValue(result, CatalogFindBasicFareResponse::class.java)
 

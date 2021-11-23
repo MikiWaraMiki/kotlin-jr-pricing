@@ -40,7 +40,7 @@ internal class CatalogBasicFareExternalRepositoryTest() {
 
             val result = catalogBasicFareExternalRepository.findBasicFare(tripRoute)
 
-            Assertions.assertEquals(expected.amount, result.amount)
+            Assertions.assertEquals(expected.amount, result!!.amount)
         }
 
         @Test
