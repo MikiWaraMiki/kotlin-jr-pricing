@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 
 @ControllerAdvice
 class ExceptionHandler {
+
     @ExceptionHandler(DomainException::class)
     fun handleDomainException(
         e: DomainException
@@ -37,6 +38,12 @@ class ExceptionHandler {
                 return ResponseEntity(
                     errorResponse,
                     HttpStatus.UNAUTHORIZED
+                )
+            }
+            ErrorCode.MASTER_DATA_NOTFOUND_ASSERTION -> {
+                return ResponseEntity(
+                    errorResponse,
+                    HttpStatus.INTERNAL_SERVER_ERROR
                 )
             }
             else -> {

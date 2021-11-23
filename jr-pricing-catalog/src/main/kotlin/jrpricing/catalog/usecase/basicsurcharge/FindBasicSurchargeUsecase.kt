@@ -26,12 +26,12 @@ class FindBasicSurchargeUsecase(
 
         // NOTE: 経路が登録されて料金が登録されていない場合は異常系とみなす
         val basicSurcharge = basicSurchargeRepository.findByRouteId(route.routeId)
-            ?: throw Exception("指定した経路の特急料金は存在しません")
+            ?: throw AssertionFailException("指定した経路の特急料金は存在しません", ErrorCode.MASTER_DATA_NOTFOUND_ASSERTION)
 
         if (!trainType.isNozomi()) return basicSurcharge
 
         val nozomiAdditionalCharge = nozomiAdditionalChargeRepository.findByRouteId(route.routeId)
-            ?: throw Exception("指定した経路ののぞみ追加料金が存在しません")
+            ?: throw AssertionFailException("指定した経路ののぞみ追加料金が存在しません", ErrorCode.MASTER_DATA_NOTFOUND_ASSERTION)
 
         return basicSurcharge.addNozomiAdditionalCharge(nozomiAdditionalCharge)
     }

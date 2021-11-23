@@ -108,7 +108,7 @@ internal class FindBasicSurchargeUsecaseTest {
                 usecase.execute(departureStationId, arrivalStationId, trainType)
             }
 
-            val exception = assertThrows<Exception>(target)
+            val exception = assertThrows<AssertionFailException>(target)
 
             Assertions.assertEquals("指定した経路の特急料金は存在しません", exception.message)
         }
@@ -130,7 +130,7 @@ internal class FindBasicSurchargeUsecaseTest {
                 usecase.execute(departureStationId, arrivalStationId, trainType)
             }
 
-            val exception = assertThrows<Exception>(target)
+            val exception = assertThrows<AssertionFailException>(target)
 
             Assertions.assertEquals("指定した経路ののぞみ追加料金が存在しません", exception.message)
         }

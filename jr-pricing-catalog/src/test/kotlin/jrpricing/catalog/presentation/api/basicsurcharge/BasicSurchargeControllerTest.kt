@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.mockk.every
 import io.mockk.mockk
 import jrpricing.catalog.domain.model.shared.Amount
+import jrpricing.catalog.domain.model.train.TrainType
 import jrpricing.catalog.presentation.api.shared.ExceptionHandler
 import jrpricing.catalog.testdata.route.TestRouteFactory
 import jrpricing.catalog.testdata.station.TestStationFactory
@@ -19,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvcBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import java.lang.Exception
 import java.nio.charset.StandardCharsets
 
 class BasicSurchargeControllerTest {
@@ -41,7 +43,7 @@ class BasicSurchargeControllerTest {
                 amount = Amount(10000)
             )
 
-            every { findBasicSurchargeUsecase.execute(departureStation.stationId, arrivalStation.stationId) }.returns(basicSurcharge)
+            every { findBasicSurchargeUsecase.execute(departureStation.stationId, arrivalStation.stationId, TrainType.HIKARI) }.returns(basicSurcharge)
 
             val expectedResponse = SearchSurchargeResponse(
                 routeId = route.routeId.value,
@@ -57,6 +59,7 @@ class BasicSurchargeControllerTest {
                 get("/api/v1/catalog/surcharge/search")
                     .param("departureStationId", departureStation.stationId.value)
                     .param("arrivalStationId", arrivalStation.stationId.value)
+                    .param("trainTypeId", TrainType.HIKARI.id.toString())
             )
                 .andExpect(status().isOk)
                 .andReturn()
@@ -71,7 +74,7 @@ class BasicSurchargeControllerTest {
             val departureStation = TestStationFactory.create()
             val arrivalStation = TestStationFactory.create()
 
-            every { findBasicSurchargeUsecase.execute(departureStation.stationId, arrivalStation.stationId) }.throws(
+            every { findBasicSurchargeUsecase.execute(departureStation.stationId, arrivalStation.stationId, TrainType.HIKARI) }.throws(
                 AssertionFailException("指定した駅間の経路は存在しません", ErrorCode.NOTFOUND_ASSERTION)
             )
 
@@ -83,16 +86,17 @@ class BasicSurchargeControllerTest {
                 get("/api/v1/catalog/fare/search")
                     .param("departureStationId", departureStation.stationId.value)
                     .param("arrivalStationId", arrivalStation.stationId.value)
+                    .param("trainTypeId", TrainType.HIKARI.id.toString())
             ).andExpect(status().isNotFound)
         }
 
         @Test
-        fun `経路は存在するが運賃が存在しない場合`() {
+        fun `経路は存在するが運賃が存在しない場合は500エラーを返すこと`() {
             val departureStation = TestStationFactory.create()
             val arrivalStation = TestStationFactory.create()
 
-            every { findBasicSurchargeUsecase.execute(departureStation.stationId, arrivalStation.stationId) }.throws(
-                AssertionFailException("指定した経路の運賃は存在しません", ErrorCode.NOTFOUND_ASSERTION)
+            every { findBasicSurchargeUsecase.execute(departureStation.stationId, arrivalStation.stationId, TrainType.HIKARI) }.throws(
+                AssertionFailException("指定した経路の運賃は存在しません", ErrorCode.MASTER_DATA_NOTFOUND_ASSERTION)
             )
 
             val mockMvc = MockMvcBuilders.standaloneSetup(basicSurchargeController)
@@ -100,10 +104,11 @@ class BasicSurchargeControllerTest {
                 .build()
 
             mockMvc.perform(
-                get("/api/v1/catalog/fare/search")
+                get("/api/v1/catalog/surcharge/search")
                     .param("departureStationId", departureStation.stationId.value)
                     .param("arrivalStationId", arrivalStation.stationId.value)
-            ).andExpect(status().isNotFound)
+                    .param("trainTypeId", TrainType.HIKARI.id.toString())
+            ).andExpect(status().isInternalServerError)
         }
     }
 }
