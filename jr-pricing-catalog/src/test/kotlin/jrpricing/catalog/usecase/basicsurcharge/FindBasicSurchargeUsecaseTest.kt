@@ -6,69 +6,135 @@ import jrpricing.catalog.domain.model.route.RouteRepository
 import jrpricing.catalog.domain.model.shared.Amount
 import jrpricing.catalog.domain.model.station.StationId
 import jrpricing.catalog.domain.model.surcharge.BasicSurchargeRepository
+import jrpricing.catalog.domain.model.surcharge.NozomiAdditionalChargeRepository
+import jrpricing.catalog.domain.model.train.TrainType
 import jrpricing.catalog.testdata.route.TestRouteFactory
 import jrpricing.catalog.testdata.surcharge.TestBasicSurchargeFactory
+import jrpricing.catalog.testdata.surcharge.TestNozomiAdditionalChargeFactory
 import jrpricing.catalog.usecase.exception.AssertionFailException
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.*
+import java.lang.Exception
 
 internal class FindBasicSurchargeUsecaseTest {
     private val routeRepository: RouteRepository = mockk()
     private val basicSurchargeRepository: BasicSurchargeRepository = mockk()
+    private val nozomiAdditionalChargeRepository: NozomiAdditionalChargeRepository = mockk()
 
-    @Test
-    fun `指定した駅間の経路が存在しない場合はAssertionFailExceptionが発生すること`() {
-        val departureStationId = StationId.create()
-        val arrivalStationId = StationId.create()
 
-        every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(null)
+    @Nested
+    @DisplayName("正常系テスト")
+    inner class SuccessTest() {
 
-        val usecase = FindBasicSurchargeUsecase(routeRepository, basicSurchargeRepository)
+        @Test
+        fun `ひかり利用時の料金を取得できること`() {
+            val departureStationId = StationId.create()
+            val arrivalStationId = StationId.create()
+            val trainType = TrainType.HIKARI
+            val route = TestRouteFactory.create(departureStationId = departureStationId, arrivalStationId = arrivalStationId)
+            val basicSurcharge = TestBasicSurchargeFactory.create(routeId = route.routeId, amount = Amount(1000))
 
-        val target: () -> Unit = {
-            usecase.execute(departureStationId, arrivalStationId)
+            every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(route)
+            every{ basicSurchargeRepository.findByRouteId(route.routeId) }.returns(basicSurcharge)
+            val usecase = FindBasicSurchargeUsecase(routeRepository, basicSurchargeRepository, nozomiAdditionalChargeRepository)
+
+            val result = usecase.execute(departureStationId, arrivalStationId, trainType)
+
+            Assertions.assertEquals(basicSurcharge.routeId, result.routeId)
+            Assertions.assertEquals(basicSurcharge.amount, result.amount)
         }
 
-        val exception = assertThrows<AssertionFailException>(target)
+        @Test
+        fun `のぞみ利用時の料金を取得できること`() {
+            val departureStationId = StationId.create()
+            val arrivalStationId = StationId.create()
+            val trainType = TrainType.NOZOMI
 
-        Assertions.assertEquals("指定した駅間の経路は存在しません", exception.message)
+            val route = TestRouteFactory.create(departureStationId = departureStationId, arrivalStationId = arrivalStationId)
+            val basicSurcharge = TestBasicSurchargeFactory.create(routeId = route.routeId, amount = Amount(1000))
+            val nozomiAdditionalCharge = TestNozomiAdditionalChargeFactory.create(routeId = route.routeId, amount = Amount(1000))
+
+            every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(route)
+            every{ basicSurchargeRepository.findByRouteId(route.routeId) }.returns(basicSurcharge)
+            every { nozomiAdditionalChargeRepository.findByRouteId(route.routeId) }.returns(nozomiAdditionalCharge)
+            val usecase = FindBasicSurchargeUsecase(routeRepository, basicSurchargeRepository, nozomiAdditionalChargeRepository)
+
+            val result = usecase.execute(departureStationId, arrivalStationId, trainType)
+            val expectedAmount = Amount(basicSurcharge.amount.value + nozomiAdditionalCharge.amount.value)
+
+            Assertions.assertEquals(basicSurcharge.routeId, result.routeId)
+            Assertions.assertEquals(expectedAmount, result.amount)
+        }
     }
 
-    @Test
-    fun `指定した経路の特急料金が登録されていない場合は、AssertionFailExceptionが発生すること`() {
-        val departureStationId = StationId.create()
-        val arrivalStationId = StationId.create()
-        val route = TestRouteFactory.create(departureStationId = departureStationId, arrivalStationId = arrivalStationId)
 
-        every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(route)
-        every{ basicSurchargeRepository.findByRouteId(route.routeId) }.returns(null)
-        val usecase = FindBasicSurchargeUsecase(routeRepository, basicSurchargeRepository)
+    @Nested
+    @DisplayName("事前条件の例外テスト")
+    inner class AssertionFailExceptionTest() {
+        @Test
+        fun `指定した駅間の経路が存在しない場合はAssertionFailExceptionが発生すること`() {
+            val departureStationId = StationId.create()
+            val arrivalStationId = StationId.create()
+            val trainType = TrainType.HIKARI
 
-        val target: () -> Unit = {
-            usecase.execute(departureStationId, arrivalStationId)
+            every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(null)
+
+            val usecase = FindBasicSurchargeUsecase(routeRepository, basicSurchargeRepository, nozomiAdditionalChargeRepository)
+
+            val target: () -> Unit = {
+                usecase.execute(departureStationId, arrivalStationId, trainType)
+            }
+
+            val exception = assertThrows<AssertionFailException>(target)
+
+            Assertions.assertEquals("指定した駅間の経路は存在しません", exception.message)
+        }
+    }
+
+    @Nested
+    @DisplayName("マスタデータが登録されていない場合に発生する例外テスト")
+    inner class ExceptionTest() {
+        @Test
+        fun `指定した経路の特急料金が登録されていない場合は、Exceptionが発生すること`() {
+            val departureStationId = StationId.create()
+            val arrivalStationId = StationId.create()
+            val trainType = TrainType.HIKARI
+            val route = TestRouteFactory.create(departureStationId = departureStationId, arrivalStationId = arrivalStationId)
+
+            every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(route)
+            every{ basicSurchargeRepository.findByRouteId(route.routeId) }.returns(null)
+            val usecase = FindBasicSurchargeUsecase(routeRepository, basicSurchargeRepository, nozomiAdditionalChargeRepository)
+
+            val target: () -> Unit = {
+                usecase.execute(departureStationId, arrivalStationId, trainType)
+            }
+
+            val exception = assertThrows<Exception>(target)
+
+            Assertions.assertEquals("指定した経路の特急料金は存在しません", exception.message)
         }
 
-        val exception = assertThrows<AssertionFailException>(target)
+        @Test
+        fun `指定した経路ののぞみ追加料金が登録されていない場合は、Exceptionが発生すること`() {
+            val departureStationId = StationId.create()
+            val arrivalStationId = StationId.create()
+            val trainType = TrainType.NOZOMI
+            val route = TestRouteFactory.create(departureStationId = departureStationId, arrivalStationId = arrivalStationId)
+            val basicSurcharge = TestBasicSurchargeFactory.create(routeId = route.routeId, amount = Amount(1000))
 
-        Assertions.assertEquals("指定した経路の特急料金は存在しません", exception.message)
+            every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(route)
+            every{ basicSurchargeRepository.findByRouteId(route.routeId) }.returns(basicSurcharge)
+            every { nozomiAdditionalChargeRepository.findByRouteId(route.routeId) }.returns(null)
+            val usecase = FindBasicSurchargeUsecase(routeRepository, basicSurchargeRepository, nozomiAdditionalChargeRepository)
+
+            val target: () -> Unit = {
+                usecase.execute(departureStationId, arrivalStationId, trainType)
+            }
+
+            val exception = assertThrows<Exception>(target)
+
+            Assertions.assertEquals("指定した経路ののぞみ追加料金が存在しません", exception.message)
+        }
+
     }
 
-    @Test
-    fun `指定した駅間の特急料金が存在する場合は、BasicSurchargeを返すこと`() {
-        val departureStationId = StationId.create()
-        val arrivalStationId = StationId.create()
-        val route = TestRouteFactory.create(departureStationId = departureStationId, arrivalStationId = arrivalStationId)
-        val basicSurcharge = TestBasicSurchargeFactory.create(routeId = route.routeId, amount = Amount(1000))
-
-        every { routeRepository.findByDepartureAndArrivalStation(departureStationId, arrivalStationId) }.returns(route)
-        every{ basicSurchargeRepository.findByRouteId(route.routeId) }.returns(basicSurcharge)
-        val usecase = FindBasicSurchargeUsecase(routeRepository, basicSurchargeRepository)
-
-        val result = usecase.execute(departureStationId, arrivalStationId)
-
-        Assertions.assertEquals(basicSurcharge.routeId, result.routeId)
-        Assertions.assertEquals(basicSurcharge.amount, result.amount)
-
-    }
 }
