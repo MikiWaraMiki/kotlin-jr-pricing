@@ -34,6 +34,6 @@ internal class RouteExternalRepositoryTest {
 
         val result = routeExternalRepository.findByStationId(ULID.random(), ULID.random())
 
-        Assertions.assertEquals(expected.kilometer(), result.kilometer())
+        Assertions.assertEquals(expected.kilometer(), result!!.kilometer())
     }
 }

@@ -6,6 +6,7 @@ import jrpricing.discount.domain.route.Route
 import jrpricing.discount.domain.route.RouteRepository
 import jrpricing.discount.infra.external.ExternalApiClient
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Repository
 import org.springframework.web.util.UriComponentsBuilder
 
 private data class RouteSearchResponse(
@@ -15,11 +16,12 @@ private data class RouteSearchResponse(
     val arrivalStation: Map<String, String>
 )
 
+@Repository
 class RouteExternalRepository(
     private val externalApiClient: ExternalApiClient,
     @Value("\${jr-discount-app-conf.catalogBaseUrl") private val catalogUrl: String
 ): RouteRepository {
-    override fun findByStationId(departureStationId: String, arrivalStationId: String): Route {
+    override fun findByStationId(departureStationId: String, arrivalStationId: String): Route? {
         val url = "${catalogUrl}/api/v1/route/search"
 
         val uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url)
@@ -27,6 +29,8 @@ class RouteExternalRepository(
             .queryParam("arrivalStationId", arrivalStationId)
 
         val result = externalApiClient.callGet(uriComponentsBuilder)
+
+        if (result == null) return null
 
         val response = jacksonObjectMapper().readValue(result, RouteSearchResponse::class.java)
 

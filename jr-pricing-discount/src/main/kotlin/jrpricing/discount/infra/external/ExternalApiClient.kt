@@ -29,7 +29,7 @@ class ExternalApiClient(
         )
 
         if (response.statusCode != HttpStatus.OK) {
-            throw CatalogApiClientException(response.body.toString(), response.statusCode)
+            return null
         }
 
         return response.body
