@@ -14,13 +14,11 @@ class SeasonVariationAmountTest {
         val surcharge = ReserveSeatSurcharge(Amount.of(1000))
         val departureMonthDay = TestDepartureMonthDayFactory.createPeakDepartureMonthDay()
 
-        val seasonVariationAmount = SeasonVariationAmount(surcharge)
-
-        val result = seasonVariationAmount.amount(departureMonthDay)
+        val seasonVariationAmount = SeasonVariationAmount.from(surcharge, departureMonthDay)
 
         val expected = Amount.of(1000 + 200)
 
-        Assertions.assertEquals(expected, result)
+        Assertions.assertEquals(expected, seasonVariationAmount.amount)
     }
 
     @Test
@@ -28,13 +26,11 @@ class SeasonVariationAmountTest {
         val surcharge = ReserveSeatSurcharge(Amount.of(1000))
         val departureMonthDay = TestDepartureMonthDayFactory.createOffPeakDepartureMonthDay()
 
-        val seasonVariationAmount = SeasonVariationAmount(surcharge)
-
-        val result = seasonVariationAmount.amount(departureMonthDay)
+        val seasonVariationAmount = SeasonVariationAmount.from(surcharge, departureMonthDay)
 
         val expected = Amount.of(1000 - 200)
 
-        Assertions.assertEquals(expected, result)
+        Assertions.assertEquals(expected, seasonVariationAmount.amount)
     }
 
     @Test
@@ -42,12 +38,10 @@ class SeasonVariationAmountTest {
         val surcharge = ReserveSeatSurcharge(Amount.of(1000))
         val departureMonthDay = TestDepartureMonthDayFactory.createRegularDepartureMonthDay()
 
-        val seasonVariationAmount = SeasonVariationAmount(surcharge)
-
-        val result = seasonVariationAmount.amount(departureMonthDay)
+        val seasonVariationAmount = SeasonVariationAmount.from(surcharge, departureMonthDay)
 
         val expected = Amount.of(1000)
 
-        Assertions.assertEquals(expected, result)
+        Assertions.assertEquals(expected, seasonVariationAmount.amount)
     }
 }

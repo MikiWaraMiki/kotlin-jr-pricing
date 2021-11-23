@@ -14,8 +14,8 @@ class SurchargeCalculator {
         }
 
         // NOTE: 指定席利用時には、乗車日に応じて料金変動が発生する
-        val seasonalVariationAmount = SeasonVariationAmount(reserveSeatSurcharge)
+        val includeSeasonVariationAmount = SeasonVariationAmount.from(reserveSeatSurcharge, departureMonthDay)
 
-        return Surcharge(seasonalVariationAmount.amount(departureMonthDay))
+        return Surcharge(includeSeasonVariationAmount.amount)
     }
 }
