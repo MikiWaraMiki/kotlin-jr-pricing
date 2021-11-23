@@ -4,5 +4,6 @@ include(
     "jr-pricing-old-app",
     "jr-pricing-catalog",
     "jr-pricing-fare",
-    "jr-pricing-discount"
+    "jr-pricing-discount",
+    "jr-pricing-surcharge"
 )

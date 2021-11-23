@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: "jdbc:postgresql://localhost:5432/jr-pricing-local"
+    username: root
+    password: root
+  config:
+    activate:
+      on-profile: test
+  jooq:
+    sql-dialect: Postgres
+logging:
+  level:
+    root: DEBUG
+jr-surcharge-app-conf:
+  catalogBaseUrl: "http://catalog:9200"
+  discountBaseUrl: "http://discount:9200"
