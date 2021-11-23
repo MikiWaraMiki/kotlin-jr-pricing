@@ -5,7 +5,7 @@ import jrpricing.surcharge.domain.shared.Amount
 /**
  * 特急料金
  */
-class BasicSurcharge(
+class Surcharge(
     val amount: Amount
 ) {
 }

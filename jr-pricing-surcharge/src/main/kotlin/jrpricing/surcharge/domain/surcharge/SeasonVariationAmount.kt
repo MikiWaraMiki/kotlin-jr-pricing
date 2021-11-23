@@ -8,19 +8,19 @@ import jrpricing.surcharge.domain.shared.DepartureMonthDay
  * 季節変動料金
  */
 class SeasonVariationAmount(
-    private val basicSurcharge: BasicSurcharge
+    private val reserveSeatSurcharge: ReserveSeatSurcharge
 ) {
 
     fun amount(departureMonthDay: DepartureMonthDay): Amount {
         if (SeasonType.isPeak(departureMonthDay.value)) {
-            return Amount.of(basicSurcharge.amount.value + PEAK_PLUS_PRICE)
+            return Amount.of(reserveSeatSurcharge.amount.value + PEAK_PLUS_PRICE)
         }
 
         if (SeasonType.isOffPeak(departureMonthDay.value)) {
-            return Amount.of(basicSurcharge.amount.value - OFF_PEAK_MINUS_PRICE)
+            return Amount.of(reserveSeatSurcharge.amount.value - OFF_PEAK_MINUS_PRICE)
         }
 
-        return basicSurcharge.amount
+        return reserveSeatSurcharge.amount
     }
 
     companion object {
