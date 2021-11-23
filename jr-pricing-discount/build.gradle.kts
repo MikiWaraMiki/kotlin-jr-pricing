@@ -17,5 +17,5 @@ dependencies {
 
 
 application {
-    mainClass.set("jrpricing.fare.FareApplication")
+    mainClass.set("jrpricing.discount.DiscountApplication")
 }
