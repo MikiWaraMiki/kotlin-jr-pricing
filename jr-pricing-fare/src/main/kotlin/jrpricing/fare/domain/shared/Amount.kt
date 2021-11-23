@@ -13,6 +13,21 @@ class Amount private constructor(
         if (value < 1) throw DomainException("金額は1円以上である必要があります", ErrorCode.INVALID_INPUT)
     }
 
+    override fun hashCode(): Int {
+        return super.hashCode() * 31
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Amount
+
+        if (value != other.value) return false
+
+        return true
+    }
+
     companion object {
         fun of(value: Int): Amount {
             return Amount(value)

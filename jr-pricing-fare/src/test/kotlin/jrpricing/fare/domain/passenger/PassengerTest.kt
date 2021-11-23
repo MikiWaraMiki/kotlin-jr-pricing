@@ -23,5 +23,6 @@ class PassengerTest {
 
         Assertions.assertEquals(1, passenger.adultCount)
         Assertions.assertEquals(1, passenger.childCount)
+        Assertions.assertEquals(2, passenger.total)
     }
 }
