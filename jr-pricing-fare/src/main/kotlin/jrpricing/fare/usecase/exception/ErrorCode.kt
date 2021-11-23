@@ -1,4 +1,4 @@
-package jrpricing.fare.usecase.fare.exception
+package jrpricing.fare.usecase.exception
 
 enum class ErrorCode(val value: Int) {
     NOTFOUND_ASSERTION(404),

@@ -10,7 +10,7 @@ import jrpricing.fare.domain.fare.Fare
 import jrpricing.fare.domain.shared.Amount
 import jrpricing.fare.domain.shared.TripRoute
 import jrpricing.fare.domain.shared.TripType
-import jrpricing.fare.usecase.fare.exception.AssertionFailException
+import jrpricing.fare.usecase.exception.AssertionFailException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
