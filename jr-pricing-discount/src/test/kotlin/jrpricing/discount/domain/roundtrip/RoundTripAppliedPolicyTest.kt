@@ -1,4 +1,4 @@
-package jrpricing.discount.domain.model.roundtrip
+package jrpricing.discount.domain.roundtrip
 
 import jrpricing.discount.domain.roundtrip.RoundTripAppliedPolicy
 import jrpricing.discount.domain.route.BusinessKilometer

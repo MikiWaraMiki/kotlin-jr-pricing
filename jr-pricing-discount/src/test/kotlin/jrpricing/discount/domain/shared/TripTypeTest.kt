@@ -1,4 +1,4 @@
-package jrpricing.discount.domain.model.shared
+package jrpricing.discount.domain.shared
 
 import jrpricing.discount.domain.shared.TripType
 import org.junit.jupiter.api.Assertions

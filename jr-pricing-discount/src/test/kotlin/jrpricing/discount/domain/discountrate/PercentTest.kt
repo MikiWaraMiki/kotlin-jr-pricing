@@ -1,4 +1,4 @@
-package jrpricing.discount.domain.model.discountrate
+package jrpricing.discount.domain.discountrate
 
 import jrpricing.discount.domain.discountrate.Percent
 import jrpricing.discount.domain.exception.DomainException

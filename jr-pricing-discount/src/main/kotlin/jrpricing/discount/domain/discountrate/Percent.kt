@@ -10,6 +10,12 @@ class Percent(
     val value: Int
 ) {
     init {
-        if (value < 0) throw DomainException("割引率が0以上の数値です", ErrorCode.INVALID_INPUT)
+        if (value < 0) throw DomainException("割引率を0未満にすることはできません", ErrorCode.INVALID_INPUT)
+
+        if (value > 101) throw DomainException("割引率を101以上の数値にすることはできません", ErrorCode.INVALID_INPUT)
+    }
+
+    fun restOfHundred(): Percent {
+        return Percent(100 - value)
     }
 }
