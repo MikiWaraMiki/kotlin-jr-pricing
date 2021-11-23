@@ -1,14 +1,18 @@
 package jrpricing.fare.infra.repository.catalog
 
+import com.github.guepardoapps.kulid.ULID
 import io.mockk.every
 import io.mockk.mockk
 import jrpricing.fare.domain.shared.Amount
 import jrpricing.fare.infra.external.CatalogApiClient
+import jrpricing.fare.infra.external.exception.CatalogApiClientException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig
 
@@ -16,12 +20,14 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig
 @SpringJUnitConfig
 @SpringBootTest
 internal class CatalogBasicFareExternalRepositoryTest() {
-    val mockCatalogApiClient: CatalogApiClient = mockk()
+    private val mockCatalogApiClient: CatalogApiClient = mockk()
+
+    private val mockULID = ULID.random()
 
     @Nested
     inner class FindBasicFareTest() {
         @Test
-        fun `経路が存在する発着駅の場合は、運賃の料金を返す`() {
+        fun `カタログAPIから正常にレスポンスが返されたら、運賃の料金を返す`() {
             every { mockCatalogApiClient.callGet(any()) }.returns(
                 "{\"routeId\": \"sample-ulid\", \"amount\": 18000}"
             )
@@ -30,9 +36,46 @@ internal class CatalogBasicFareExternalRepositoryTest() {
 
             val expected = Amount.of(18000)
 
-            val result = catalogBasicFareExternalRepository.findBasicFare("sample", "sample")
+            val result = catalogBasicFareExternalRepository.findBasicFare(mockULID, mockULID)
 
             Assertions.assertEquals(expected, result)
+        }
+
+        @Test
+        fun `カタログAPIから404エラーが返されたら、CatalogApiExceptionが発生する`() {
+            every { mockCatalogApiClient.callGet(any()) }.throws(
+                CatalogApiClientException("エラーが発生しました", HttpStatus.NOT_FOUND)
+            )
+
+            val catalogBasicFareExternalRepository = CatalogBasicFareExternalRepository(mockCatalogApiClient, "http://localhost:9200")
+
+            val target:() -> Unit = {
+                catalogBasicFareExternalRepository.findBasicFare(mockULID, mockULID)
+            }
+
+            val exception = assertThrows<CatalogApiClientException>(target)
+
+            Assertions.assertEquals("エラーが発生しました", exception.message)
+            Assertions.assertEquals(exception.httpStatus, HttpStatus.NOT_FOUND)
+        }
+
+        @Test
+        fun `カタログAPIから500エラーが返されたら、CatalogApiExceptionが発生すること`() {
+            every { mockCatalogApiClient.callGet(any()) }.throws(
+                CatalogApiClientException("エラーが発生しました", HttpStatus.INTERNAL_SERVER_ERROR)
+            )
+
+            val catalogBasicFareExternalRepository = CatalogBasicFareExternalRepository(mockCatalogApiClient, "http://localhost:9200")
+
+            val target:() -> Unit = {
+                catalogBasicFareExternalRepository.findBasicFare(mockULID, mockULID)
+            }
+
+            val exception = assertThrows<CatalogApiClientException>(target)
+
+            Assertions.assertEquals("エラーが発生しました", exception.message)
+            Assertions.assertEquals(exception.httpStatus, HttpStatus.INTERNAL_SERVER_ERROR)
+
         }
     }
 }
