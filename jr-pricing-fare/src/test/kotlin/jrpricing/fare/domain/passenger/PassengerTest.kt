@@ -1,6 +1,7 @@
 package jrpricing.fare.domain.passenger
 
 import jrpricing.fare.domain.exception.DomainException
+import jrpricing.fare.domain.shared.Passenger
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

@@ -5,7 +5,8 @@ import io.mockk.every
 import io.mockk.mockk
 import jrpricing.fare.domain.fare.BasicFare
 import jrpricing.fare.domain.shared.Amount
-import jrpricing.fare.infra.external.CatalogApiClient
+import jrpricing.fare.domain.shared.TripRoute
+import jrpricing.fare.infra.external.ExternalApiClient
 import jrpricing.fare.infra.external.exception.CatalogApiClientException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
@@ -21,9 +22,9 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig
 @SpringJUnitConfig
 @SpringBootTest
 internal class CatalogBasicFareExternalRepositoryTest() {
-    private val mockCatalogApiClient: CatalogApiClient = mockk()
+    private val mockCatalogApiClient: ExternalApiClient = mockk()
 
-    private val mockULID = ULID.random()
+    private val tripRoute = TripRoute(ULID.random(), ULID.random())
 
     @Nested
     inner class FindBasicFareTest() {
@@ -37,7 +38,7 @@ internal class CatalogBasicFareExternalRepositoryTest() {
 
             val expected = BasicFare.of(Amount.of(18000))
 
-            val result = catalogBasicFareExternalRepository.findBasicFare(mockULID, mockULID)
+            val result = catalogBasicFareExternalRepository.findBasicFare(tripRoute)
 
             Assertions.assertEquals(expected.amount, result.amount)
         }
@@ -51,7 +52,7 @@ internal class CatalogBasicFareExternalRepositoryTest() {
             val catalogBasicFareExternalRepository = CatalogBasicFareExternalRepository(mockCatalogApiClient, "http://localhost:9200")
 
             val target:() -> Unit = {
-                catalogBasicFareExternalRepository.findBasicFare(mockULID, mockULID)
+                catalogBasicFareExternalRepository.findBasicFare(tripRoute)
             }
 
             val exception = assertThrows<CatalogApiClientException>(target)
@@ -69,7 +70,7 @@ internal class CatalogBasicFareExternalRepositoryTest() {
             val catalogBasicFareExternalRepository = CatalogBasicFareExternalRepository(mockCatalogApiClient, "http://localhost:9200")
 
             val target:() -> Unit = {
-                catalogBasicFareExternalRepository.findBasicFare(mockULID, mockULID)
+                catalogBasicFareExternalRepository.findBasicFare(tripRoute)
             }
 
             val exception = assertThrows<CatalogApiClientException>(target)

@@ -4,7 +4,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import jrpricing.fare.domain.catalog.CatalogBasicFareRepository
 import jrpricing.fare.domain.fare.BasicFare
 import jrpricing.fare.domain.shared.Amount
-import jrpricing.fare.infra.external.CatalogApiClient
+import jrpricing.fare.domain.shared.TripRoute
+import jrpricing.fare.infra.external.ExternalApiClient
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Repository
 import org.springframework.web.util.UriComponentsBuilder
@@ -14,16 +15,16 @@ import org.springframework.web.util.UriComponentsBuilder
  */
 @Repository
 class CatalogBasicFareExternalRepository(
-    private val catalogApiClient: CatalogApiClient,
+    private val externalApiClient: ExternalApiClient,
     @Value("\${jr-fare-app-conf.catalogBaseUrl") private val catalogUrl: String
 ): CatalogBasicFareRepository {
 
-    override fun findBasicFare(arrivalStationId: String, departureStationId: String): BasicFare {
+    override fun findBasicFare(tripRoute: TripRoute): BasicFare {
         val uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(catalogUrl)
-            .queryParam("arrivalStationId", arrivalStationId)
-            .queryParam("departureStationId", departureStationId)
+            .queryParam("arrivalStationId", tripRoute.arrivalStationId)
+            .queryParam("departureStationId", tripRoute.departureStationId)
 
-        val result = catalogApiClient.callGet(uriComponentsBuilder)
+        val result = externalApiClient.callGet(uriComponentsBuilder)
 
         val response = jacksonObjectMapper().readValue(result, CatalogFindBasicFareResponse::class.java)
 

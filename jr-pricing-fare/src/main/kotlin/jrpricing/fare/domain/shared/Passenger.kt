@@ -1,4 +1,4 @@
-package jrpricing.fare.domain.passenger
+package jrpricing.fare.domain.shared
 
 import jrpricing.fare.domain.exception.DomainException
 import jrpricing.fare.domain.exception.ErrorCode
