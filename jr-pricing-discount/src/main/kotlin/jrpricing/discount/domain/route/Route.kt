@@ -1,9 +1,9 @@
 package jrpricing.discount.domain.route
 
 class Route(
-    private val distanceKilometer: DistanceKilometer
+    private val businessKilometer: BusinessKilometer
 ) {
     fun kilometer(): Int {
-        return distanceKilometer.value
+        return businessKilometer.value
     }
 }

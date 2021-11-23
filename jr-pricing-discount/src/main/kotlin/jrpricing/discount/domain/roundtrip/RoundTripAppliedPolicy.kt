@@ -1,6 +1,5 @@
 package jrpricing.discount.domain.roundtrip
 
-import jrpricing.discount.domain.route.DistanceKilometer
 import jrpricing.discount.domain.route.Route
 import jrpricing.discount.domain.shared.TripType
 

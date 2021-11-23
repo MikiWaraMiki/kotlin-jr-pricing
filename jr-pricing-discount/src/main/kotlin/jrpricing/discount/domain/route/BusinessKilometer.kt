@@ -3,7 +3,7 @@ package jrpricing.discount.domain.route
 import jrpricing.discount.domain.exception.DomainException
 import jrpricing.discount.domain.exception.ErrorCode
 
-class DistanceKilometer(
+class BusinessKilometer(
     val value: Int
 ) {
     init {
