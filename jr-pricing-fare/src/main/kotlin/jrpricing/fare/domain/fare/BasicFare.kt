@@ -5,12 +5,12 @@ import jrpricing.fare.domain.shared.Amount
 /**
  * 割引適用前運賃
  */
-class BeforeDiscountedFare private constructor(
+class BasicFare private constructor(
     val amount: Amount
 ) {
     companion object {
-        fun of(amount: Amount): BeforeDiscountedFare {
-            return BeforeDiscountedFare(amount)
+        fun of(amount: Amount): BasicFare {
+            return BasicFare(amount)
         }
     }
 }

@@ -3,6 +3,7 @@ package jrpricing.fare.infra.repository.catalog
 import com.github.guepardoapps.kulid.ULID
 import io.mockk.every
 import io.mockk.mockk
+import jrpricing.fare.domain.fare.BasicFare
 import jrpricing.fare.domain.shared.Amount
 import jrpricing.fare.infra.external.CatalogApiClient
 import jrpricing.fare.infra.external.exception.CatalogApiClientException
@@ -34,11 +35,11 @@ internal class CatalogBasicFareExternalRepositoryTest() {
 
             val catalogBasicFareExternalRepository = CatalogBasicFareExternalRepository(mockCatalogApiClient, "http://localhost:9200")
 
-            val expected = Amount.of(18000)
+            val expected = BasicFare.of(Amount.of(18000))
 
             val result = catalogBasicFareExternalRepository.findBasicFare(mockULID, mockULID)
 
-            Assertions.assertEquals(expected, result)
+            Assertions.assertEquals(expected.amount, result.amount)
         }
 
         @Test

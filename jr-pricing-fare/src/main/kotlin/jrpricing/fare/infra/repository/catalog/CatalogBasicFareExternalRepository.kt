@@ -2,6 +2,7 @@ package jrpricing.fare.infra.repository.catalog
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import jrpricing.fare.domain.catalog.CatalogBasicFareRepository
+import jrpricing.fare.domain.fare.BasicFare
 import jrpricing.fare.domain.shared.Amount
 import jrpricing.fare.infra.external.CatalogApiClient
 import org.springframework.beans.factory.annotation.Value
@@ -17,7 +18,7 @@ class CatalogBasicFareExternalRepository(
     @Value("\${jr-fare-app-conf.catalogBaseUrl") private val catalogUrl: String
 ): CatalogBasicFareRepository {
 
-    override fun findBasicFare(arrivalStationId: String, departureStationId: String): Amount {
+    override fun findBasicFare(arrivalStationId: String, departureStationId: String): BasicFare {
         val uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(catalogUrl)
             .queryParam("arrivalStationId", arrivalStationId)
             .queryParam("departureStationId", departureStationId)
@@ -26,6 +27,6 @@ class CatalogBasicFareExternalRepository(
 
         val response = jacksonObjectMapper().readValue(result, CatalogFindBasicFareResponse::class.java)
 
-        return Amount.of(response.amount)
+        return BasicFare.of(Amount.of(response.amount))
     }
 }
