@@ -22,7 +22,7 @@ internal class CalcRoundTripDiscountUsecaseTest {
         val departureStationId: String = ULID.random()
         val arrivalStationId: String = ULID.random()
         val tripType = TripType.ROUND_TRIP
-        val beforeRoundTripDiscountedFare = BeforeRoundTripDiscountedFare(Amount.of(1000))
+        val baseFareAmount = Amount.of(1000)
 
         every { mockRouteRepository.findByStationId(departureStationId, arrivalStationId) }.returns(
             Route(BusinessKilometer(601))
@@ -30,7 +30,7 @@ internal class CalcRoundTripDiscountUsecaseTest {
 
         val usecase = CalcRoundTripDiscountUsecase(routeRepository = mockRouteRepository)
 
-        val result = usecase.execute(departureStationId, arrivalStationId, tripType, beforeRoundTripDiscountedFare)
+        val result = usecase.execute(departureStationId, arrivalStationId, tripType, baseFareAmount.value)
 
         val expected = Amount.of(900) // 10%割引
 
@@ -42,7 +42,7 @@ internal class CalcRoundTripDiscountUsecaseTest {
         val departureStationId: String = ULID.random()
         val arrivalStationId: String = ULID.random()
         val tripType = TripType.ROUND_TRIP
-        val beforeRoundTripDiscountedFare = BeforeRoundTripDiscountedFare(Amount.of(1000))
+        val baseFareAmount = Amount.of(1000)
 
         every { mockRouteRepository.findByStationId(departureStationId, arrivalStationId) }.returns(
             Route(BusinessKilometer(600))
@@ -50,9 +50,9 @@ internal class CalcRoundTripDiscountUsecaseTest {
 
         val usecase = CalcRoundTripDiscountUsecase(routeRepository = mockRouteRepository)
 
-        val result = usecase.execute(departureStationId, arrivalStationId, tripType, beforeRoundTripDiscountedFare)
+        val result = usecase.execute(departureStationId, arrivalStationId, tripType, baseFareAmount.value)
 
-        val expected = Amount.of(1000) // 10%割引
+        val expected = Amount.of(1000)
 
         Assertions.assertEquals(expected, result)
     }
@@ -62,14 +62,14 @@ internal class CalcRoundTripDiscountUsecaseTest {
         val departureStationId: String = ULID.random()
         val arrivalStationId: String = ULID.random()
         val tripType = TripType.ROUND_TRIP
-        val beforeRoundTripDiscountedFare = BeforeRoundTripDiscountedFare(Amount.of(1000))
+        val baseFareAmount = Amount.of(1000)
 
         every { mockRouteRepository.findByStationId(departureStationId, arrivalStationId) }.returns(null)
 
         val usecase = CalcRoundTripDiscountUsecase(routeRepository = mockRouteRepository)
 
         val target: () -> Unit = {
-            usecase.execute(departureStationId, arrivalStationId, tripType, beforeRoundTripDiscountedFare)
+            usecase.execute(departureStationId, arrivalStationId, tripType, baseFareAmount.value)
         }
 
         val exception = assertThrows<AssertionFailException>(target)

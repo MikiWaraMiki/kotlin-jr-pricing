@@ -23,11 +23,12 @@ class CalcRoundTripDiscountUsecase(
         departureStationId: String,
         arrivalStationId: String,
         tripType: TripType,
-        beforeGroupDiscountedFare: BeforeRoundTripDiscountedFare
+        baseFare: Int
     ): Amount {
         val route = routeRepository.findByStationId(departureStationId, arrivalStationId)
             ?: throw AssertionFailException("存在しない経路です", ErrorCode.NOTFOUND_ASSERTION)
 
-        return roundTripDiscountCalcService.calc(beforeGroupDiscountedFare, route, tripType)
+        val beforeRoundTripDiscountedFare = BeforeRoundTripDiscountedFare(Amount.of(baseFare))
+        return roundTripDiscountCalcService.calc(beforeRoundTripDiscountedFare, route, tripType)
     }
 }
