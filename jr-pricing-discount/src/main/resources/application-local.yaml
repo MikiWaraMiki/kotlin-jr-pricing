@@ -17,6 +17,5 @@ spring:
 logging:
   level:
     root: DEBUG
-jr-fare-app-conf:
-  catalogBaseUrl: "http://catalog:9200"
+jr-discount-app-conf:
   discountBaseUrl: "http://discount:9200"

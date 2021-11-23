@@ -3,5 +3,3 @@ spring:
     active: default
     include:
       - local
-jr-fare-app-conf:
-  catalogBaseUrl: "http://catalog:9200"
