@@ -4,13 +4,11 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import jrpricing.fare.domain.discount.DiscountRepository
 import jrpricing.fare.domain.fare.BasicFare
 import jrpricing.fare.domain.shared.Amount
-import jrpricing.fare.domain.shared.DepartureDate
-import jrpricing.fare.domain.shared.Passenger
 import jrpricing.fare.domain.shared.TripRoute
+import jrpricing.fare.domain.shared.TripType
 import jrpricing.fare.infra.external.ExternalApiClient
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Repository
-import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 
 @Repository
@@ -22,14 +20,13 @@ class DiscountExternalRepository(
     override fun calc(
         basicFare: BasicFare,
         route: TripRoute,
-        passenger: Passenger,
-        departureDate: DepartureDate
+        tripType: TripType,
     ): Amount {
         val uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(discountBaseUrl)
             .queryParam("arrivalStationId", route.arrivalStationId)
             .queryParam("departureStationId", route.departureStationId)
-            .queryParam("passengers", passenger.total)
-            .queryParam("departureMonthDay", departureDate.monthDay())
+            .queryParam("fare", basicFare.amount.value)
+            .queryParam("tripTypeName", tripType.typeName)
 
         val result = externalApiClient.callGet(uriComponentsBuilder)
 

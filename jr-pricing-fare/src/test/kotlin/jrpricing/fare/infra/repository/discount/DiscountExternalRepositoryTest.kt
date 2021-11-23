@@ -5,9 +5,8 @@ import io.mockk.every
 import io.mockk.mockk
 import jrpricing.fare.domain.fare.BasicFare
 import jrpricing.fare.domain.shared.Amount
-import jrpricing.fare.domain.shared.DepartureDate
-import jrpricing.fare.domain.shared.Passenger
 import jrpricing.fare.domain.shared.TripRoute
+import jrpricing.fare.domain.shared.TripType
 import jrpricing.fare.infra.external.ExternalApiClient
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
@@ -28,8 +27,7 @@ internal class DiscountExternalRepositoryTest {
     inner class CalcTest() {
         val basicFare = BasicFare.of(Amount.of(10000))
         val tripRoute = TripRoute(ULID.random(), ULID.random())
-        val passenger = Passenger(1, 0)
-        val departureDate = DepartureDate(LocalDate.now())
+        val tripType = TripType.ROUND_TRIP
 
         @Test
         fun `APIから200レスポンスが返された場合は、Amountを取得できること`() {
@@ -47,8 +45,7 @@ internal class DiscountExternalRepositoryTest {
             val result = discountExternalRepository.calc(
                 basicFare,
                 tripRoute,
-                passenger,
-                departureDate
+                tripType
             )
 
             Assertions.assertEquals(expected, result)
