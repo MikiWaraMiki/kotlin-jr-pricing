@@ -1,4 +1,4 @@
-package jrpricing.surcharge.domain.model.surcharge
+package jrpricing.surcharge.domain.surcharge
 
 import jrpricing.surcharge.domain.shared.Amount
 import jrpricing.surcharge.domain.surcharge.NonReserveSeatSurcharge

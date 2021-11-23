@@ -1,4 +1,4 @@
-package jrpricing.surcharge.domain.model.testdata
+package jrpricing.surcharge.domain.testdata
 
 import jrpricing.surcharge.domain.shared.DepartureMonthDay
 import java.time.LocalDate

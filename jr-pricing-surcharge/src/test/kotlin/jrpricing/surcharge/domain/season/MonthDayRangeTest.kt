@@ -1,4 +1,4 @@
-package jrpricing.surcharge.domain.model.season
+package jrpricing.surcharge.domain.season
 
 import jrpricing.surcharge.domain.exception.DomainException
 import jrpricing.surcharge.domain.season.MonthDayRange
