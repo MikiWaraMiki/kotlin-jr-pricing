@@ -19,14 +19,11 @@ class FindSurchargeUsecase(
     private val surchargeCalculator = SurchargeCalculator()
 
     fun execute(
-        departureStationId: String,
-        arrivalStationId: String,
+        tripRoute: TripRoute,
         seatType: SeatType,
         trainType: TrainType,
         departureMonthDay: DepartureMonthDay
     ): Surcharge {
-        val tripRoute = TripRoute(departureStationId, arrivalStationId)
-
         val reserveSeatSurcharge = reserveSeatSurchargeRepository.findByTripRoute(tripRoute, trainType)
             ?: throw AssertionFailException("存在しない経路です", ErrorCode.NOTFOUND_ASSERTION)
 
