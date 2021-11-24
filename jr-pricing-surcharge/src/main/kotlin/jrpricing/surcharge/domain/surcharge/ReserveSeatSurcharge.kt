@@ -9,8 +9,4 @@ import jrpricing.surcharge.domain.shared.DepartureMonthDay
 class ReserveSeatSurcharge(
     val amount: Amount
 ) {
-    fun addSeasonVariationAmount(departureMonthDay: DepartureMonthDay): Amount {
-        val result = SeasonVariationAmount.from(this, departureMonthDay)
-        return result.amount
-    }
 }
